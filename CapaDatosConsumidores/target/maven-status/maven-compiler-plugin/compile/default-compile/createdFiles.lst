@@ -1,0 +1,5 @@
+conexion\Conexion.class
+dao\IFachadaDAO.class
+dao\FachadaDAO.class
+dominio\Consumidor.class
+dao\ConsumidorDAO.class
