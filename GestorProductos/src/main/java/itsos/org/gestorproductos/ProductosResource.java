@@ -20,6 +20,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -96,60 +97,42 @@ public class ProductosResource {
     @GET
     @Path("/query")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response consultarProductosNombreSuper(@QueryParam("nombreSuper") String nombreSuper
+    public Response consultarProductosFiltros(@QueryParam("nombreSuper") String nombreSuper,
+            @QueryParam("nombreProducto") String nombreProducto,
+            @QueryParam("categoria") String categoria
     ) {
+
+        List<Producto> listaProductos = new ArrayList<>();
+        Producto[] productos = null;
         if (nombreSuper != null) {
             if (!nombreSuper.isBlank()) {
-                List<Producto> listaProductos = dao.consultarProductosNombreSuper(nombreSuper);
-                Producto[] productos = listaProductos.toArray(new Producto[listaProductos.size()]);
-                if (productos != null) {
-                    return Response.ok().entity(productos).build();
-                } else {
-                    return Response.status(404).build();
-                }
+                listaProductos = dao.consultarProductosNombreSuper(nombreSuper);
+                productos = listaProductos.toArray(new Producto[listaProductos.size()]);
+
             }
         }
-        return Response.status(404).build();
-    }
 
-    @GET
-    @Path("/query")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response consultarProductosNombre(@QueryParam("nombreProducto") String nombreProducto
-    ) {
         if (nombreProducto != null) {
             if (!nombreProducto.isBlank()) {
-                List<Producto> listaProductos = dao.consultarProductosNombre(nombreProducto);
-                Producto[] productos = listaProductos.toArray(new Producto[listaProductos.size()]);
-                if (productos != null) {
-                    return Response.ok().entity(productos).build();
-                } else {
-                    return Response.status(404).build();
-                }
+                listaProductos = dao.consultarProductosNombre(nombreProducto);
+                productos = listaProductos.toArray(new Producto[listaProductos.size()]);
 
             }
         }
-        return Response.status(404).build();
-    }
 
-    @GET
-    @Path("/query")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response consultarProductosCategoria(@QueryParam("categoria") String categoria
-    ) {
         if (categoria != null) {
             if (!categoria.isBlank()) {
-                List<Producto> listaProductos = dao.consultarProductoCategoria(categoria);
-                Producto[] productos = listaProductos.toArray(new Producto[listaProductos.size()]);
-                if (productos != null) {
-                    return Response.ok().entity(productos).build();
-                } else {
-                    return Response.status(404).build();
-                }
+                listaProductos = dao.consultarProductoCategoria(categoria);
+                productos = listaProductos.toArray(new Producto[listaProductos.size()]);
 
             }
         }
+        if (productos != null) {
+            if (productos.length > 0) {
+                return Response.ok().entity(productos).build();
+            }
+        }
+
         return Response.status(404).build();
     }
-
 }

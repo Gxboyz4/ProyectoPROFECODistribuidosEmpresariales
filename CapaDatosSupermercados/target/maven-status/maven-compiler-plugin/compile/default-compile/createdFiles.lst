@@ -1,5 +1,0 @@
-dominio\Supermercado.class
-conexion\Conexion.class
-dao\IFachadaDAO.class
-dao\SupermercadoDAO.class
-dao\FachadaDAO.class
