@@ -1,0 +1,5 @@
+dao\ProductosDAO.class
+conexion\Conexion.class
+dominio\Producto.class
+dao\IFachadaDAO.class
+dao\FachadaDAO.class
