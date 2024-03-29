@@ -72,6 +72,7 @@ public class SupermercadosResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response registrarSupermercado(Supermercado supermercado) {
         if (supermercado != null && supermercado.getCorreo() != null && dao.consultarSupermercado(supermercado.getCorreo()) == null) {
+            
             Supermercado supermercadoRegistrado = dao.registrarSupermercado(supermercado);
             return Response.ok().entity(supermercadoRegistrado).build();
         }
