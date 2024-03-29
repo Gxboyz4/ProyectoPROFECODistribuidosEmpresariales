@@ -7,6 +7,7 @@ package org.itson.apigatewaysupermercados;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.UriInfo;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Produces;
@@ -25,7 +26,7 @@ import jakarta.ws.rs.core.Response;
 /**
  * REST Web Service
  *
- * @author 
+ * @author
  */
 @Path("apisupermercados")
 public class ApisupermercadosResource {
@@ -60,17 +61,34 @@ public class ApisupermercadosResource {
     @Path("/{servicio}/{metodo}/query")
     @Produces(MediaType.APPLICATION_JSON)
     public Response enrutarSolicitudQuery(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo,
-            @QueryParam("correo") String correo, @QueryParam("contrasenia") String contrasenia) {
+            @QueryParam("correo") String correo, @QueryParam("contrasenia") String contrasenia, @QueryParam("nombreSuper") String nombreSuper,
+            @QueryParam("nombreProducto") String nombreProducto, @QueryParam("categoria") String categoria) {
         String url = this.obtenerUrl(servicio, metodo);
-        url+= "correo="+correo+"&contrasenia="+contrasenia;
-        if (url != null) {
-            Response response = this.regresarInvocationBuilder(url).get();
-
-            return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
+        String filtroQuery = this.armarUrlQuery(correo, contrasenia, nombreSuper, nombreProducto, categoria);
+        if (filtroQuery != null) {
+            if (url != null) {
+                url += filtroQuery;
+                Response response = this.regresarInvocationBuilder(url).get();
+                return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
+            }
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
     }
-    
+
+    private String armarUrlQuery(String correo, String contrasenia, String nombreSuper, String nombreProducto, String categoria) {
+        if (correo != null && contrasenia != null) {
+            return "correo=" + correo + "&contrasenia=" + contrasenia;
+        } else if (nombreSuper != null) {
+            return "nombreSuper=" + nombreSuper;
+        } else if (nombreProducto != null) {
+            return "nombreProducto=" + nombreProducto;
+        } else if (categoria != null) {
+            return "categoria=" + categoria;
+        } else {
+            return null;
+        }
+    }
+
     @GET
     @Path("/{servicio}/{metodo}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -82,50 +100,89 @@ public class ApisupermercadosResource {
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
     }
-    
+
     @GET
-    @Path("/{servicio}/{metodo}/{nombre}")
+    @Path("/{servicio}/{metodo}/{parametroBusqueda}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response enrutarSolicitudesGetPorNombre(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo, 
-            @PathParam("nombre") String nombreSupermercado) {
-        String url = this.obtenerUrl(servicio, metodo) + nombreSupermercado;
+    public Response enrutarSolicitudesGetPorParametro(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo,
+            @PathParam("parametroBusqueda") String parametroBusqueda) {
+        String url = this.obtenerUrl(servicio, metodo) + parametroBusqueda;
         if (url != null) {
             Response response = this.regresarInvocationBuilder(url).get();
             return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
     }
-    
+
+    @DELETE
+    @Path("/{servicio}/{metodo}/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response enrutarSolicitudesDeletePorId(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo,
+            @PathParam("id") String id) {
+        String url = this.obtenerUrl(servicio, metodo) + id;
+        if (url != null) {
+            Response response = this.regresarInvocationBuilder(url).delete();
+            return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
+    }
+
     public String obtenerUrl(String servicio, String metodo) {
         String url = "http://localhost:8080/";
 
         switch (servicio) {
             case "supermercados":
                 url += "GestorSupermercados/resources/supermercados";
+                switch (metodo) {
+                    case "registrar":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    case "autenticar":
+                        url += "/query?";
+                        break;
+                    case "actualizar":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    case "consultartodos":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    case "consultarnombre":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    default:
+                        return null;
+                }
                 break;
-            default:
-                return null;
-        }
-
-        switch (metodo) {
-            case "registrar":
-                System.out.println("Metodo " + metodo + " del servicio " + servicio);
-                url += "/";
-                break;
-            case "autenticar":
-                url += "/query?";
-                break;
-            case "actualizar":
-                System.out.println("Metodo " + metodo + " del servicio " + servicio);
-                url += "/";
-                break;
-            case "consultartodos":
-                System.out.println("Metodo " + metodo + " del servicio " + servicio);
-                url += "/";
-                break;
-            case "consultarnombre":
-                System.out.println("Metodo " + metodo + " del servicio " + servicio);
-                url += "/";
+            case "productos":
+                url += "GestorProductos/resources/productos";
+                switch (metodo) {
+                    case "registrar":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    case "actualizar":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    case "eliminar":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    case "consultarproductosidsuper":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    case "consultarfiltros":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/query?";
+                        break;
+                    default:
+                        return null;
+                }
                 break;
             default:
                 return null;
@@ -133,7 +190,7 @@ public class ApisupermercadosResource {
 
         return url;
     }
-    
+
     private Invocation.Builder regresarInvocationBuilder(String url) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(url);
