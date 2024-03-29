@@ -62,9 +62,10 @@ public class ApisupermercadosResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response enrutarSolicitudQuery(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo,
             @QueryParam("correo") String correo, @QueryParam("contrasenia") String contrasenia, @QueryParam("nombreSuper") String nombreSuper,
-            @QueryParam("nombreProducto") String nombreProducto, @QueryParam("categoria") String categoria) {
+            @QueryParam("nombreProducto") String nombreProducto, @QueryParam("categoria") String categoria, @QueryParam("idSupermercado") String idSupermercado,
+            @QueryParam("pagina") Integer pagina) {
         String url = this.obtenerUrl(servicio, metodo);
-        String filtroQuery = this.armarUrlQuery(correo, contrasenia, nombreSuper, nombreProducto, categoria);
+        String filtroQuery = this.armarUrlQuery(correo, contrasenia, nombreSuper, nombreProducto, categoria, idSupermercado, pagina);
         if (filtroQuery != null) {
             if (url != null) {
                 url += filtroQuery;
@@ -75,15 +76,20 @@ public class ApisupermercadosResource {
         return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
     }
 
-    private String armarUrlQuery(String correo, String contrasenia, String nombreSuper, String nombreProducto, String categoria) {
+    private String armarUrlQuery(String correo, String contrasenia, String nombreSuper, String nombreProducto, String categoria, String idSupermercado, Integer pagina) {
+        if (pagina == null) {
+            pagina = 1;
+        }
         if (correo != null && contrasenia != null) {
             return "correo=" + correo + "&contrasenia=" + contrasenia;
         } else if (nombreSuper != null) {
-            return "nombreSuper=" + nombreSuper;
+            return "nombreSuper=" + nombreSuper + "&pagina=" + pagina;
         } else if (nombreProducto != null) {
-            return "nombreProducto=" + nombreProducto;
+            return "nombreProducto=" + nombreProducto + "&pagina=" + pagina;
         } else if (categoria != null) {
-            return "categoria=" + categoria;
+            return "categoria=" + categoria + "&pagina=" + pagina;
+        } else if (idSupermercado != null) {
+            return "idSupermercado=" + idSupermercado + "&pagina=" + pagina;
         } else {
             return null;
         }
@@ -174,7 +180,7 @@ public class ApisupermercadosResource {
                         break;
                     case "consultarproductosidsuper":
                         System.out.println("Metodo " + metodo + " del servicio " + servicio);
-                        url += "/";
+                        url += "/query?";
                         break;
                     case "consultarfiltros":
                         System.out.println("Metodo " + metodo + " del servicio " + servicio);

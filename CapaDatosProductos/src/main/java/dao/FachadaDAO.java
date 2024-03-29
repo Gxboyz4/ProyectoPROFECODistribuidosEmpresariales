@@ -32,25 +32,25 @@ public class FachadaDAO implements IFachadaDAO {
     }
 
     @Override
-    public List<Producto> consultarProductosIdSuper(String idSupermercado) {
-         return productosDAO.consultarProductosIdSuper(idSupermercado);
+    public List<Producto> consultarProductosIdSuper(String idSupermercado, int pagina, int cantidadMaxima) {
+        return productosDAO.consultarProductosIdSuper(idSupermercado, pagina, cantidadMaxima);
     }
 
     @Override
-    public List<Producto> consultarProductosNombreSuper(String nombreSupermercado) {
-         return productosDAO.consultarProductosNombreSuper(nombreSupermercado);
+    public List<Producto> consultarProductosNombreSuper(String nombreSupermercado, int pagina, int cantidadMaxima) {
+        return productosDAO.consultarProductosNombreSuper(nombreSupermercado, pagina, cantidadMaxima);
     }
 
     @Override
-    public List<Producto> consultarProductosNombre(String nombreProducto) {
-         return productosDAO.consultarProductosNombre(nombreProducto);
+    public List<Producto> consultarProductosNombre(String nombreProducto, int pagina, int cantidadMaxima) {
+        return productosDAO.consultarProductosNombre(nombreProducto, pagina, cantidadMaxima);
     }
 
     @Override
-    public List<Producto> consultarProductoCategoria(String categoria) {
-         return productosDAO.consultarProductoCategoria(categoria);
+    public List<Producto> consultarProductoCategoria(String categoria, int pagina, int cantidadMaxima) {
+        return productosDAO.consultarProductoCategoria(categoria, pagina, cantidadMaxima);
     }
-
+    
     @Override
     public DeleteResult eliminarProducto(String id) {
          return productosDAO.eliminarProducto(id);

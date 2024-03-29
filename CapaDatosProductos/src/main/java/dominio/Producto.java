@@ -17,6 +17,7 @@ public class Producto {
     private String idSupermercado;
     private String nombreSupermercado;
     private String categoria;
+    private double precio;
     private String direccionImagen;
 
     public Producto() {
@@ -26,29 +27,32 @@ public class Producto {
         this.id = id;
     }
 
-    public Producto(String id, String nombre, String idSupermercado, String nombreSupermercado, String categoria, String direccionImagen) {
+    public Producto(String id, String nombre, String idSupermercado, String nombreSupermercado, String categoria, String direccionImagen, double precio) {
         this.id = id;
         this.nombre = nombre;
         this.idSupermercado = idSupermercado;
         this.nombreSupermercado = nombreSupermercado;
         this.categoria = categoria;
         this.direccionImagen = direccionImagen;
+        this.precio = precio;
     }
 
-    public Producto(String nombre, String idSupermercado, String nombreSupermercado, String categoria, String direccionImagen) {
+    public Producto(String nombre, String idSupermercado, String nombreSupermercado, String categoria, String direccionImagen, double precio) {
         this.nombre = nombre;
         this.idSupermercado = idSupermercado;
         this.nombreSupermercado = nombreSupermercado;
         this.categoria = categoria;
         this.direccionImagen = direccionImagen;
+        this.precio = precio;
     }
 
-    public Producto(String nombre, String idSupermercado, String nombreSupermercado, String categoria) {
+    public Producto(String nombre, String idSupermercado, String nombreSupermercado, String categoria, double precio) {
         
         this.nombre = nombre;
         this.idSupermercado = idSupermercado;
         this.nombreSupermercado = nombreSupermercado;
         this.categoria = categoria;
+        this.precio = precio;
     }
     
     public void generarID(){
@@ -102,6 +106,14 @@ public class Producto {
 
     public void setDireccionImagen(String direccionImagen) {
         this.direccionImagen = direccionImagen;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     @Override

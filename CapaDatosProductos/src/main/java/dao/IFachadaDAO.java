@@ -18,14 +18,15 @@ public interface IFachadaDAO {
     public Producto registrarProducto(Producto producto);
 
     public Producto actualizarProducto(Producto producto);
+    
+    public List<Producto> consultarProductosIdSuper(String idSupermercado, int pagina, int cantidadMaxima);
 
-    public List<Producto> consultarProductosIdSuper(String idSupermercado);
+    public List<Producto> consultarProductosNombreSuper(String nombreSupermercado, int pagina, int cantidadMaxima);
 
-    public List<Producto> consultarProductosNombreSuper(String nombreSupermercado);
+    public List<Producto> consultarProductosNombre(String nombreProducto, int pagina, int cantidadMaxima);
 
-    public List<Producto> consultarProductosNombre(String nombreProducto);
-
-    public List<Producto> consultarProductoCategoria(String categoria);
+    public List<Producto> consultarProductoCategoria(String categoria, int pagina, int cantidadMaxima);
 
     public DeleteResult eliminarProducto(String id);
+
 }

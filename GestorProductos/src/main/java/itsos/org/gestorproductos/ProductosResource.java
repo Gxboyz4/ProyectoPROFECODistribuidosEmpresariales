@@ -35,6 +35,7 @@ public class ProductosResource {
     @Context
     private UriInfo context;
     private FachadaDAO dao;
+    private final int NUM_REGISTROS_POR_PAGINA = 10;
 
     /**
      * Creates a new instance of Productos
@@ -77,56 +78,47 @@ public class ProductosResource {
     }
 
     @GET
-    @Path("/{idSupermercado}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response consultarProductosIDSuper(@PathParam("idSupermercado") String id) {
-        if (id != null) {
-            if (!id.isBlank()) {
-                List<Producto> listaProductos = dao.consultarProductosIdSuper(id);
-                Producto[] productos = listaProductos.toArray(new Producto[listaProductos.size()]);
-                if (productos != null) {
-                    return Response.ok().entity(productos).build();
-                } else {
-                    return Response.status(404).build();
-                }
-            }
-        }
-        return Response.status(404).build();
-    }
-
-    @GET
     @Path("/query")
     @Produces(MediaType.APPLICATION_JSON)
     public Response consultarProductosFiltros(@QueryParam("nombreSuper") String nombreSuper,
             @QueryParam("nombreProducto") String nombreProducto,
-            @QueryParam("categoria") String categoria
+            @QueryParam("categoria") String categoria,
+            @QueryParam("idSupermercado") String idSupermercado,
+            @QueryParam("pagina") Integer pagina
     ) {
+        if (pagina == null) {
+            pagina = 1;
+        }
 
         List<Producto> listaProductos = new ArrayList<>();
         Producto[] productos = null;
-        if (nombreSuper != null) {
+
+        if (idSupermercado != null) {
+            if (!idSupermercado.isBlank()) {
+                listaProductos = dao.consultarProductosIdSuper(idSupermercado, pagina, NUM_REGISTROS_POR_PAGINA);
+                productos = listaProductos.toArray(new Producto[listaProductos.size()]);
+
+            }
+        } else if (nombreSuper != null) {
             if (!nombreSuper.isBlank()) {
-                listaProductos = dao.consultarProductosNombreSuper(nombreSuper);
+                listaProductos = dao.consultarProductosNombreSuper(nombreSuper, pagina, NUM_REGISTROS_POR_PAGINA);
                 productos = listaProductos.toArray(new Producto[listaProductos.size()]);
 
             }
-        }
-
-        if (nombreProducto != null) {
+        } else if (nombreProducto != null) {
             if (!nombreProducto.isBlank()) {
-                listaProductos = dao.consultarProductosNombre(nombreProducto);
+                listaProductos = dao.consultarProductosNombre(nombreProducto, pagina, NUM_REGISTROS_POR_PAGINA);
                 productos = listaProductos.toArray(new Producto[listaProductos.size()]);
 
             }
-        }
-
-        if (categoria != null) {
+        } else if (categoria != null) {
             if (!categoria.isBlank()) {
-                listaProductos = dao.consultarProductoCategoria(categoria);
+                listaProductos = dao.consultarProductoCategoria(categoria, pagina, NUM_REGISTROS_POR_PAGINA);
                 productos = listaProductos.toArray(new Producto[listaProductos.size()]);
 
             }
         }
+
         if (productos != null) {
             if (productos.length > 0) {
                 return Response.ok().entity(productos).build();
