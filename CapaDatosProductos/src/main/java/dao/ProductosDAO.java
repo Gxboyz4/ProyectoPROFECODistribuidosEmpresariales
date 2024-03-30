@@ -22,7 +22,7 @@ import org.bson.types.ObjectId;
 public class ProductosDAO implements IFachadaDAO{
 
     private final MongoDatabase BASE_DATOS;
-    private final String NOMBRE_COLECCION = "prodcutos";
+    private final String NOMBRE_COLECCION = "productos";
     private MongoCollection<Producto> coleccion;
 
     public ProductosDAO() {
