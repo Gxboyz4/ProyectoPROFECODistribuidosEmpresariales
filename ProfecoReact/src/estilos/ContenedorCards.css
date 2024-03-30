@@ -1,0 +1,13 @@
+.contenedor-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 80;
+  }
+  
+  @media (max-width: 768px) {
+    .contenedor-cards {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
