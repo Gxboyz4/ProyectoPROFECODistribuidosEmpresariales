@@ -1,0 +1,12 @@
+.cuerpo-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .separador {
+    width: 2px;
+    background-color: #ccc;
+    margin: 0 10px;
+  }
