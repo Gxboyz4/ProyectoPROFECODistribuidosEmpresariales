@@ -97,34 +97,26 @@ public class ProductosResource {
             if (!idSupermercado.isBlank()) {
                 listaProductos = dao.consultarProductosIdSuper(idSupermercado, pagina, NUM_REGISTROS_POR_PAGINA);
                 productos = listaProductos.toArray(new Producto[listaProductos.size()]);
-
-            }
-        } else if (nombreSuper != null) {
-            if (!nombreSuper.isBlank()) {
-                listaProductos = dao.consultarProductosNombreSuper(nombreSuper, pagina, NUM_REGISTROS_POR_PAGINA);
-                productos = listaProductos.toArray(new Producto[listaProductos.size()]);
-
-            }
-        } else if (nombreProducto != null) {
-            if (!nombreProducto.isBlank()) {
-                listaProductos = dao.consultarProductosNombre(nombreProducto, pagina, NUM_REGISTROS_POR_PAGINA);
-                productos = listaProductos.toArray(new Producto[listaProductos.size()]);
-
-            }
-        } else if (categoria != null) {
-            if (!categoria.isBlank()) {
-                listaProductos = dao.consultarProductoCategoria(categoria, pagina, NUM_REGISTROS_POR_PAGINA);
-                productos = listaProductos.toArray(new Producto[listaProductos.size()]);
-
+                if (contieneRegistros(productos)) {
+                    return Response.ok().entity(productos).build();
+                }
+                return Response.status(404).build();
             }
         }
+        listaProductos = dao.consultarProductosFiltros(nombreSuper, nombreProducto, categoria, pagina, NUM_REGISTROS_POR_PAGINA);
+        productos = listaProductos.toArray(new Producto[listaProductos.size()]);
+        if (contieneRegistros(productos)) {
+            return Response.ok().entity(productos).build();
+        }
+        return Response.status(404).build();
+    }
 
+    private boolean contieneRegistros(Producto[] productos) {
         if (productos != null) {
             if (productos.length > 0) {
-                return Response.ok().entity(productos).build();
+                return true;
             }
         }
-
-        return Response.status(404).build();
+        return false;
     }
 }

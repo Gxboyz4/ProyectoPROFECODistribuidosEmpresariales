@@ -27,6 +27,8 @@ public interface IFachadaDAO {
 
     public List<Producto> consultarProductoCategoria(String categoria, int pagina, int cantidadMaxima);
 
+    public List<Producto> consultarProductosFiltros(String nombreSuper, String nombreProducto, String categoria, int pagina, int cantidadMaxima);
+    
     public DeleteResult eliminarProducto(String id);
 
 }

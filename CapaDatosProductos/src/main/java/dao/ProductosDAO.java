@@ -19,7 +19,7 @@ import org.bson.types.ObjectId;
  *
  * @author julio
  */
-public class ProductosDAO implements IFachadaDAO{
+public class ProductosDAO implements IFachadaDAO {
 
     private final MongoDatabase BASE_DATOS;
     private final String NOMBRE_COLECCION = "productos";
@@ -44,67 +44,93 @@ public class ProductosDAO implements IFachadaDAO{
     }
 
     @Override
-public List<Producto> consultarProductosIdSuper(String idSupermercado, int pagina, int cantidadMaxima) {
-    List<Producto> listaProductos = new ArrayList<>();
+    public List<Producto> consultarProductosIdSuper(String idSupermercado, int pagina, int cantidadMaxima) {
+        List<Producto> listaProductos = new ArrayList<>();
 
-    coleccion.find(eq("idSupermercado", idSupermercado))
-             .skip((pagina - 1) * cantidadMaxima)
-             .limit(cantidadMaxima)
-             .into(listaProductos);
+        coleccion.find(eq("idSupermercado", idSupermercado))
+                .skip((pagina - 1) * cantidadMaxima)
+                .limit(cantidadMaxima)
+                .into(listaProductos);
 
-    return listaProductos;
-}
+        return listaProductos;
+    }
 
-@Override
-public List<Producto> consultarProductosNombreSuper(String nombreSupermercado, int pagina, int cantidadMaxima) {
-    List<Producto> listaProductos = new ArrayList<>();
+    @Override
+    public List<Producto> consultarProductosNombreSuper(String nombreSupermercado, int pagina, int cantidadMaxima) {
+        List<Producto> listaProductos = new ArrayList<>();
 
-    Document filtro = new Document("nombreSupermercado",
-            new Document("$regex", nombreSupermercado)
-                    .append("$options", "i"));
+        Document filtro = new Document("nombreSupermercado",
+                new Document("$regex", nombreSupermercado)
+                        .append("$options", "i"));
 
-    coleccion.find(filtro)
-             .skip((pagina - 1) * cantidadMaxima)
-             .limit(cantidadMaxima)
-             .into(listaProductos);
+        coleccion.find(filtro)
+                .skip((pagina - 1) * cantidadMaxima)
+                .limit(cantidadMaxima)
+                .into(listaProductos);
 
-    return listaProductos;
-}
+        return listaProductos;
+    }
 
-@Override
-public List<Producto> consultarProductosNombre(String nombreProducto, int pagina, int cantidadMaxima) {
-    List<Producto> listaProductos = new ArrayList<>();
+    @Override
+    public List<Producto> consultarProductosNombre(String nombreProducto, int pagina, int cantidadMaxima) {
+        List<Producto> listaProductos = new ArrayList<>();
 
-    Document filtro = new Document("nombre",
-            new Document("$regex", nombreProducto)
-                    .append("$options", "i"));
+        Document filtro = new Document("nombre",
+                new Document("$regex", nombreProducto)
+                        .append("$options", "i"));
 
-    coleccion.find(filtro)
-             .skip((pagina - 1) * cantidadMaxima)
-             .limit(cantidadMaxima)
-             .into(listaProductos);
+        coleccion.find(filtro)
+                .skip((pagina - 1) * cantidadMaxima)
+                .limit(cantidadMaxima)
+                .into(listaProductos);
 
-    return listaProductos;
-}
+        return listaProductos;
+    }
 
-@Override
-public List<Producto> consultarProductoCategoria(String categoria, int pagina, int cantidadMaxima) {
-    List<Producto> listaProductos = new ArrayList<>();
+    @Override
+    public List<Producto> consultarProductoCategoria(String categoria, int pagina, int cantidadMaxima) {
+        List<Producto> listaProductos = new ArrayList<>();
 
-    Document filtro = new Document("categoria",
-            new Document("$regex", categoria)
-                    .append("$options", "i"));
+        Document filtro = new Document("categoria",
+                new Document("$regex", categoria)
+                        .append("$options", "i"));
 
-    coleccion.find(filtro)
-             .skip((pagina - 1) * cantidadMaxima)
-             .limit(cantidadMaxima)
-             .into(listaProductos);
+        coleccion.find(filtro)
+                .skip((pagina - 1) * cantidadMaxima)
+                .limit(cantidadMaxima)
+                .into(listaProductos);
 
-    return listaProductos;
-}
+        return listaProductos;
+    }
+
+    @Override
+    public List<Producto> consultarProductosFiltros(String nombreSuper, String nombreProducto, String categoria, int pagina, int cantidadMaxima) {
+        List<Producto> listaProductos = new ArrayList<>();
+
+        Document filtro = new Document();
+
+        if (nombreSuper != null) {
+            filtro.append("nombreSupermercado", new Document("$regex", nombreSuper).append("$options", "i"));
+        }
+
+        if (nombreProducto != null) {
+            filtro.append("nombre", new Document("$regex", nombreProducto).append("$options", "i"));
+        }
+
+        if (categoria != null) {
+            filtro.append("categoria", new Document("$regex", categoria).append("$options", "i"));
+        }
+
+        coleccion.find(filtro)
+                .skip((pagina - 1) * cantidadMaxima)
+                .limit(cantidadMaxima)
+                .into(listaProductos);
+
+        return listaProductos;
+    }
     
     @Override
-    public DeleteResult eliminarProducto(String id){
+    public DeleteResult eliminarProducto(String id) {
         return coleccion.deleteOne(eq("_id", id));
     }
 }

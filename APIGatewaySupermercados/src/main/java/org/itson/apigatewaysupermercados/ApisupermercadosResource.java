@@ -82,15 +82,36 @@ public class ApisupermercadosResource {
         }
         if (correo != null && contrasenia != null) {
             return "correo=" + correo + "&contrasenia=" + contrasenia;
-        } else if (nombreSuper != null) {
-            return "nombreSuper=" + nombreSuper + "&pagina=" + pagina;
-        } else if (nombreProducto != null) {
-            return "nombreProducto=" + nombreProducto + "&pagina=" + pagina;
-        } else if (categoria != null) {
-            return "categoria=" + categoria + "&pagina=" + pagina;
-        } else if (idSupermercado != null) {
+        } 
+        if (idSupermercado != null) {
             return "idSupermercado=" + idSupermercado + "&pagina=" + pagina;
-        } else {
+        }
+        int parametrosAdjuntos = 0;
+        String cadenaConsulta = "";
+        if (nombreSuper != null) {
+            cadenaConsulta+="nombreSuper="+nombreSuper;
+            parametrosAdjuntos++;
+        }
+        if (nombreProducto != null) {
+            if(parametrosAdjuntos!=0){
+                cadenaConsulta+="&";
+            }else{
+                parametrosAdjuntos++;
+            }
+            cadenaConsulta+="nombreProducto=" + nombreProducto;
+        }
+        if (categoria != null) {
+            if(parametrosAdjuntos!=0){
+                cadenaConsulta+="&";
+            }else{
+                parametrosAdjuntos++;
+            }
+            cadenaConsulta+="categoria=" + categoria;
+        }
+        cadenaConsulta+= "&pagina=" + pagina;
+        if(parametrosAdjuntos!=0){
+            return cadenaConsulta;
+        }else{
             return null;
         }
     }
