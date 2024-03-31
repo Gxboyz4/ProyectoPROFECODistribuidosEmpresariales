@@ -44,6 +44,20 @@ public class ProductosResource {
         dao = new FachadaDAO();
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{pagina}")
+    public Response consultarProductos(@PathParam("pagina") String pagina) {
+        List<Producto> listaProductos = dao.consultarProductos(Integer.parseInt(pagina), NUM_REGISTROS_POR_PAGINA);
+        Producto[] productos = listaProductos.toArray(new Producto[listaProductos.size()]);
+        if (productos != null) {
+            if (productos.length > 0) {
+                return Response.ok().entity(listaProductos).build();
+            }
+        }
+        return Response.status(404).build();
+    }
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

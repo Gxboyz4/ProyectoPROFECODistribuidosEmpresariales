@@ -13,7 +13,7 @@ export const CardProducto = ({ nombre, nombreSupermercado, categoria, precio, im
                 <p className="card-precio">${precio}</p>
             </div>
             <a href="https://www.google.com" className="card-btn">
-                GODEL
+                Añadir al carrito
             </a> 
         </div>
     );

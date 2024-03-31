@@ -12,7 +12,7 @@ import org.bson.types.ObjectId;
  */
 public class Consumidor {
     
-    private ObjectId id;
+    private String id;
     private String correo;
     private String contrasenia;
     private String nombre;
@@ -23,7 +23,7 @@ public class Consumidor {
     public Consumidor() {
     }
 
-    public Consumidor(ObjectId id, String correo, String contrasenia, String nombre, String apellidoPaterno, String apellidoMaterno, String estadoResidencia) {
+    public Consumidor(String id, String correo, String contrasenia, String nombre, String apellidoPaterno, String apellidoMaterno, String estadoResidencia) {
         this.id = id;
         this.correo = correo;
         this.contrasenia = contrasenia;
@@ -40,22 +40,30 @@ public class Consumidor {
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.estadoResidencia = estadoResidencia;
+        this.generarID();
     }
 
     public Consumidor(String correo, String contrasenia) {
         this.correo = correo;
         this.contrasenia = contrasenia;
+        this.generarID();
     }
 
     public Consumidor(String correo) {
         this.correo = correo;
+        this.generarID();
     }
 
-    public ObjectId getId() {
+    public void generarID(){
+        ObjectId objectId = new ObjectId();
+        this.id = objectId.toHexString();
+    }
+    
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 

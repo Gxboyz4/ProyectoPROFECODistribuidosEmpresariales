@@ -130,6 +130,18 @@ public class ProductosDAO implements IFachadaDAO {
     }
     
     @Override
+    public List<Producto> consultarProductos(int pagina, int cantidadMaxima) {
+        List<Producto> listaProductos = new ArrayList<>();
+
+        coleccion.find()
+                .skip((pagina - 1) * cantidadMaxima)
+                .limit(cantidadMaxima)
+                .into(listaProductos);
+
+        return listaProductos;
+    }
+    
+    @Override
     public DeleteResult eliminarProducto(String id) {
         return coleccion.deleteOne(eq("_id", id));
     }

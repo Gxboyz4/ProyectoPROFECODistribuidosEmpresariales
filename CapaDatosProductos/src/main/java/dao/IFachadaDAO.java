@@ -31,4 +31,6 @@ public interface IFachadaDAO {
     
     public DeleteResult eliminarProducto(String id);
 
+    public List<Producto> consultarProductos(int pagina, int cantidadMaxima);
+    
 }

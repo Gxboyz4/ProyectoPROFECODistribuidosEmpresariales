@@ -57,6 +57,11 @@ public class FachadaDAO implements IFachadaDAO {
     }
     
     @Override
+    public List<Producto> consultarProductos(int pagina, int cantidadMaxima){
+        return productosDAO.consultarProductos(pagina, cantidadMaxima);
+    }
+    
+    @Override
     public DeleteResult eliminarProducto(String id) {
          return productosDAO.eliminarProducto(id);
     }

@@ -207,6 +207,10 @@ public class ApisupermercadosResource {
                         System.out.println("Metodo " + metodo + " del servicio " + servicio);
                         url += "/query?";
                         break;
+                    case "consultarpagina":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
                     default:
                         return null;
                 }
