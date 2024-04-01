@@ -1,16 +1,12 @@
 
 import './App.css';
-import { Header } from './componentes/Header';
-import { CuerpoPagina } from './componentes/CuerpoPagina';
-import { Footer } from './componentes/Footer';
+import { PaginaProductos } from './componentes/PaginaProductos';
 
 
 const App = () => {
   return (
     <div>
-      <Header />
-      <CuerpoPagina />
-      <Footer/>
+      <PaginaProductos/>
     </div>
   );
 };

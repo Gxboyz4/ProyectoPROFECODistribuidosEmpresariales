@@ -11,12 +11,21 @@ export const ContenedorCards = ({ filtros }) => {
                 let cadenaConsulta = "";
                 let parametrosAdjuntos = 0;
 
-                if (filtros.supermercado) {
+                if (filtros.supermercado && filtros.supermercado !== "Todos") {
                     cadenaConsulta += `nombreSuper=${filtros.supermercado}`;
                     parametrosAdjuntos++;
                 }
+
+                if (filtros.nombreProducto) {
+                    if(parametrosAdjuntos!==0){
+                        cadenaConsulta+="&";
+                    }else{
+                        parametrosAdjuntos++;
+                    }
+                    cadenaConsulta+=`nombreProducto=${filtros.nombreProducto}`;
+                }
                 
-                if (filtros.categoria) {
+                if (filtros.categoria && filtros.categoria !== "Todos") {
                     cadenaConsulta += parametrosAdjuntos ? '&' : '';
                     cadenaConsulta += `categoria=${filtros.categoria}`;
                     parametrosAdjuntos++;
