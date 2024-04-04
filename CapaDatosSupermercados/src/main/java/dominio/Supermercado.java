@@ -36,18 +36,15 @@ public class Supermercado {
         this.contrasenia = contrasenia;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.generarID();
     }
 
     public Supermercado(String correo, String contrasenia) {
         this.correo = correo;
         this.contrasenia = contrasenia;
-        this.generarID();
     }
 
     public Supermercado(String correo) {
         this.correo = correo;
-        this.generarID();
     }
 
     public void generarID(){

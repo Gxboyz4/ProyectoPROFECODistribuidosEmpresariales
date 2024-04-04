@@ -34,6 +34,7 @@ public class SupermercadoDAO implements IFachadaDAO {
 
     @Override
     public Supermercado registrarSupermercado(Supermercado supermercado) {
+        supermercado.generarID();
         coleccion.insertOne(supermercado);
         return supermercado;
     }
