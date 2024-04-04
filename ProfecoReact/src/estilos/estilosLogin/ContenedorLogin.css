@@ -46,4 +46,10 @@
     width: 100%;
     text-align: center;
   }
-  
+  .link-registro {
+    display: block;
+    margin-top: 10px;
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+  }

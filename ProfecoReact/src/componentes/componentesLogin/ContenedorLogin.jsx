@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import "../../estilos/estilosLogin/ContenedorLogin.css";
 
 export const ContenedorLogin = () => {
     const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(''); 
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -14,6 +17,7 @@ export const ContenedorLogin = () => {
             const data = await response.json();
             console.log('Respuesta del servidor:', data);
             setError('');
+            navigate('/paginaproductos')
 
           } else {
             console.error('Error, usuario no encontrado:', response.status);
@@ -47,6 +51,8 @@ export const ContenedorLogin = () => {
           </div>
           {error && <label className="mensaje-error">{error}</label>}
           <button className="botonIniciar" type="submit">Iniciar sesión</button>
+           {/* Enlace al registro */}
+           <Link to="/registrar" className="link-registro">Registrar</Link>
         </form>
       </div>
     )
