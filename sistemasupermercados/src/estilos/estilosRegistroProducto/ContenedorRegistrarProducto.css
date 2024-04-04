@@ -1,0 +1,75 @@
+.registro-form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px;
+    border: 1px solid #e9b527;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    position: relative;
+}
+
+.registro-form-container .titulo-registro {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.registro-form-container form {
+    margin-bottom: 20px;
+}
+
+.registro-form-container input[type='email'],
+.registro-form-container input[type='password'],
+.registro-form-container input[type='text'],
+.registro-form-container select {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.registro-form-container .botonRegistrar {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ffe600;
+    color: #222;
+    cursor: pointer;
+}
+
+.registro-form-container .botonRegistrar:hover {
+    background-color: #cfb41b;
+}
+
+.registro-form-container .mensaje-error {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.registro-form-container .mensaje-exito {
+    color: green;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.registro-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.registro-link:hover {
+    text-decoration: underline;
+}
+.link-registro {
+    display: block;
+    margin-top: 10px;
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+  }
