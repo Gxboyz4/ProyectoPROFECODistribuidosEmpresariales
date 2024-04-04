@@ -29,6 +29,7 @@ public class ConsumidorDAO implements IFachadaDAO {
 
     @Override
     public Consumidor registrarConsumidor(Consumidor consumidor) {
+        consumidor.generarID();
         coleccion.insertOne(consumidor);
         return consumidor;
     }

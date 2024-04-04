@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 //import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom'; 
 import "../../estilos/estilosRegistrar/ContenedorRegistrar.css";
+import { useNavigate } from 'react-router-dom';
+
 
 export const ContenedorRegistrar = () => {
     const [correo, setCorreo] = useState('');
@@ -11,7 +13,7 @@ export const ContenedorRegistrar = () => {
     const [apellidoMaterno, setApellidoMaterno] = useState('');
     const [estadoResidencia, setEstadoResidencia] = useState('');
     const [error, setError] = useState('');
-   // const history = useHistory();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,7 +36,7 @@ export const ContenedorRegistrar = () => {
             });
 
             if (response.ok) {
-                //history.push('/login'); // Redirige al usuario al inicio de sesión después de registrarse
+                navigate('/')
             } else {
                 const data = await response.json();
                 setError(data.message); // Muestra el mensaje de error proporcionado por la API

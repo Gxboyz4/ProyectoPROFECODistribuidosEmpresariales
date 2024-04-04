@@ -31,7 +31,7 @@ export const ContenedorRegistrar = () => {
 
             if (response.ok) {
                 setError('');
-                navigate('/login')
+                navigate('/')
             } else {
                 const data = await response.json();
                 setError(data.message); // Muestra el mensaje de error proporcionado por la API

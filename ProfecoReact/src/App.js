@@ -11,7 +11,7 @@ const App = () => {
     <Router>
       <Routes> {/* Envuelve tus rutas dentro de <Routes> */}
         {/* Ruta para el componente de inicio de sesión */}
-        <Route path="/login" element={<CuerpoLogin />} />
+        <Route path="/" element={<CuerpoLogin />} />
         {/* Ruta para el componente de registro */}
         <Route path="/registrar" element={<CuerpoRegistrar />} />
         {/* Ruta para el componente de página productos*/}
