@@ -3,10 +3,11 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-color: #f5e9a6;
   }
 
   .separador {
     width: 2px;
-    background-color: #ccc;
+    background-color:#f5e9a6;
     margin: 0 10px;
   }

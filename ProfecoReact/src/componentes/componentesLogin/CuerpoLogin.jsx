@@ -5,7 +5,7 @@ import '../../estilos/estilosLogin/CuerpoLogin.css';
 export const CuerpoLogin = () => {
     return (
       <div className="cuerpo-login">
-        <ContenedorLogin />
+        <ContenedorLogin/>
       </div>
     );
   };
