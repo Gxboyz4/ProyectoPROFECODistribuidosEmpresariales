@@ -2,16 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import '../../estilos/estilosRegistroProducto/TablaProductos.css';
 
-export const TablaProductos = ({ estado }) => {
+export const TablaProductos = ({ estado, onEdit  }) => {
   
   const idSupermercado = estado.data.id;
   const [data, setData] = useState([]);
   const [pagina, setPagina] = useState(1);
   const [paginaActual, setPaginaActual] = useState(1);
-
-  const onEdit = (id) => {
-    // Código para editar
-  };
 
   const onDelete = (id) => {
     eliminarProducto(id);
@@ -74,7 +70,7 @@ export const TablaProductos = ({ estado }) => {
               <td>{item.direccionImagen}</td>
               <td>{item.precio}</td>
               <td className="acciones">
-                <Button variant="primary" onClick={() => onEdit(item.id)}>Editar</Button>
+                <Button variant="primary" onClick={() => onEdit(item)}>Editar</Button>
                 <Button variant="danger" onClick={() => onDelete(item.id)}>Eliminar</Button>
               </td>
             </tr>

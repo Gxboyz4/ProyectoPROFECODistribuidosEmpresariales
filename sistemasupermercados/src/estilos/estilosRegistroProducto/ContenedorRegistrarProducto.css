@@ -17,12 +17,11 @@
     margin-bottom: 20px;
 }
 
-.registro-form-container input[type='email'],
-.registro-form-container input[type='password'],
 .registro-form-container input[type='text'],
+.registro-form-container input[type='number'],
 .registro-form-container select {
     width: 100%;
-    padding: 15px;
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-sizing: border-box;

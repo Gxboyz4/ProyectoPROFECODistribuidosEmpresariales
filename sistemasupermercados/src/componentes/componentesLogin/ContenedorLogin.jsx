@@ -19,11 +19,11 @@ export const ContenedorLogin = () => {
             setError('');
             navigate('/registroproductos',{state:{data}})
           } else {
-            console.error('Error, usuario no encontrado:', response.status);
+            console.log('Error, usuario no encontrado:', response.status);
             setError('Usuario o contraseña incorrectos');
           }
         } catch (error) {
-          console.error('Error al procesar la solicitud:', error);
+          console.log('Error al procesar la solicitud:', error);
           setError('Error al procesar la solicitud');
         }
       };

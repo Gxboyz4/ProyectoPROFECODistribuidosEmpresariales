@@ -14,8 +14,8 @@
     margin-bottom: 20px;
   }
   
-  input[type='email'],
-  input[type='password'] {
+  .login-form-container input[type='email'],
+  .login-form-container input[type='password'] {
     width: 100%;
     padding: 15px;
     border: 1px solid #ccc;
@@ -47,3 +47,16 @@
     text-align: center;
   }
   
+  .link-registro {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
+  
+  .link-registro:hover {
+    color: #0066cc;
+  }
