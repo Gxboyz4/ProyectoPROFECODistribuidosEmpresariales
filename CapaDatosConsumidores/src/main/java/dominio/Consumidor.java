@@ -40,18 +40,15 @@ public class Consumidor {
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.estadoResidencia = estadoResidencia;
-        this.generarID();
     }
 
     public Consumidor(String correo, String contrasenia) {
         this.correo = correo;
         this.contrasenia = contrasenia;
-        this.generarID();
     }
 
     public Consumidor(String correo) {
         this.correo = correo;
-        this.generarID();
     }
 
     public void generarID(){

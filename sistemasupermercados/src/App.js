@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import { CuerpoRegistrar } from './componentes/componentesRegistrar/CuerpoRegistrar';
+import { CuerpoRegistrarSupermercado } from './componentes/componentesRegistrar/CuerpoRegistrarSupermercado';
 import { CuerpoRegistrarProducto } from './componentes/componentesRegistroProducto/CuerpoRegistrarProducto';
 import { CuerpoLogin } from './componentes/componentesLogin/CuerpoLogin';
 
@@ -11,7 +11,7 @@ const App = () => {
         {/* Ruta para el componente de inicio de sesión */}
         <Route path="/" element={<CuerpoLogin />} />
         {/* Ruta para el componente de registro */}
-        <Route path="/registrar" element={<CuerpoRegistrar />} />
+        <Route path="/registrar" element={<CuerpoRegistrarSupermercado />} />
         {/* Ruta para el componente de página productos*/}
        <Route path="/registroproductos" element={<CuerpoRegistrarProducto />} />
         {/* ... */}

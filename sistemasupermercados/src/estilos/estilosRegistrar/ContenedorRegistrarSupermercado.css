@@ -17,12 +17,12 @@
     margin-bottom: 20px;
 }
 
-
+.registro-form-container input[type='email'],
+.registro-form-container input[type='password'],
 .registro-form-container input[type='text'],
-.registro-form-container input[type='number'],
 .registro-form-container select {
     width: 100%;
-    padding: 12px;
+    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-sizing: border-box;
@@ -36,22 +36,17 @@
     border: none;
     border-radius: 8px;
     background-color: #9C1945;
-    color: #222;
+    font-size: 20px;
+    color: #ffffff;
     cursor: pointer;
 }
 
 .registro-form-container .botonRegistrar:hover {
-    background-color: #5f102a;
+    background-color: #550f26;
 }
 
 .registro-form-container .mensaje-error {
     color: red;
-    margin-top: 10px;
-    text-align: center;
-}
-
-.registro-form-container .mensaje-exito {
-    color: green;
     margin-top: 10px;
     text-align: center;
 }

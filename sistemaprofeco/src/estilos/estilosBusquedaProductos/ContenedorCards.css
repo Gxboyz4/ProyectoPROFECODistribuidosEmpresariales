@@ -1,0 +1,29 @@
+.contenedor-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex: 80;
+  position: relative;
+}
+
+.contenedor-cards-mensaje-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 0, 0, 0.8);
+  color: #fff;
+  padding: 20px 30px; /* Aumenta el espacio de relleno */
+  border-radius: 10px; /* Bordes más redondeados */
+  text-align: center;
+  font-size: 18px; /* Tamaño de fuente más grande */
+  /* Añade sombra para un efecto más elegante */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .contenedor-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}

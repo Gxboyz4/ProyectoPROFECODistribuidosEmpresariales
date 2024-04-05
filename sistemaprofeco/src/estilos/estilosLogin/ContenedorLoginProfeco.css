@@ -12,7 +12,7 @@
   text-align: center;
 }
 
-.form-group {
+.login-form-group {
   margin-bottom: 20px;
 }
 
@@ -26,22 +26,22 @@
   font-size: 20px;
 }
 
-.botonIniciar {
+.login-botonIniciar {
   width: 100%;
   padding: 15px;
   border: none;
   border-radius: 8px;
   background-color: #9C1945;
-  color: #000000;
+  color: #ffffff;
   cursor: pointer;
   font-size: 17px;
 }
 
-.botonIniciar:hover {
+.login-botonIniciar:hover {
   background-color: #7B0D2F;
 }
 
-.mensaje-error {
+.login-mensaje-error {
   color: red;
   margin-top: 10px;
   position: absolute;
@@ -51,7 +51,7 @@
   text-align: center;
 }
 
-.link-registro {
+.login-link-registro {
   display: block;
   margin-top: 15px;
   text-align: center;
