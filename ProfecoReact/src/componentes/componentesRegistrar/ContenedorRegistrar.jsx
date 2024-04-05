@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-//import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import "../../estilos/estilosRegistrar/ContenedorRegistrar.css";
+import SweetAlert from '../SweetAlert'; // Importa el componente SweetAlert
 import { useNavigate } from 'react-router-dom';
-
 
 export const ContenedorRegistrar = () => {
     const [correo, setCorreo] = useState('');
@@ -13,6 +12,7 @@ export const ContenedorRegistrar = () => {
     const [apellidoMaterno, setApellidoMaterno] = useState('');
     const [estadoResidencia, setEstadoResidencia] = useState('');
     const [error, setError] = useState('');
+    const [showAlert, setShowAlert] = useState(false); // Estado para controlar la visibilidad del SweetAlert
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -36,7 +36,14 @@ export const ContenedorRegistrar = () => {
             });
 
             if (response.ok) {
-                navigate('/')
+                setApellidoMaterno("")
+                setApellidoPaterno("")
+                setContrasenia("")
+                setCorreo("")
+                setEstadoResidencia("")
+                setNombre("")
+
+                setShowAlert(true); // Mostrar el SweetAlert antes del redireccionamiento
             } else {
                 const data = await response.json();
                 setError(data.message); // Muestra el mensaje de error proporcionado por la API
@@ -46,6 +53,12 @@ export const ContenedorRegistrar = () => {
             setError('Error al registrar el consumidor');
         }
     };
+
+    // Función para manejar la confirmación del SweetAlert y redireccionar
+    const handleConfirmAlert = () => {
+        navigate('/');
+    };
+
     return (
         <div className="registro-form-container">
             <h2 className="titulo-registro">Registro de Consumidor</h2>
@@ -61,10 +74,19 @@ export const ContenedorRegistrar = () => {
                     {/* Agregar más opciones de estado o leer de una lista */}
                 </select>
                 <button type="submit" className="botonRegistrar">Registrarse</button>
-                 {/* Enlace al registro */}
-             <Link to="/login" className="link-registro">¿Ya está registrado? Click aquí</Link>
+                {/* Enlace al registro */}
+                <Link to="/" className="link-registro">¿Ya está registrado? Click aquí</Link>
             </form>
             {error && <label className="mensaje-error">{error}</label>}
+
+            {showAlert && (
+                <SweetAlert
+                    message="¡Registro exitoso! ¿Desea navegar a la página de inicio?"
+                    type="success"
+                    onConfirm={handleConfirmAlert}
+                    onCancel={() => setShowAlert(false)}
+                />
+            )}
         </div>
     );
 };

@@ -4,6 +4,7 @@ import '../estilos/ContenedorCards.css';
 
 export const ContenedorCards = ({ filtros }) => {
     const [productos, setProductos] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const obtenerProductos = async () => {
@@ -43,23 +44,27 @@ export const ContenedorCards = ({ filtros }) => {
                 
                 const response = await fetch(urlPeticion);
                 if (!response.ok) {
-                    throw new Error('Error al obtener productos');
+                    throw new Error('No hay productos Disponibles');
                 }
                 const data = await response.json();
                 setProductos(data);
+                setError(null); // Limpiar el error si la respuesta es exitosa
+                
+
             } catch (error) {
                 console.error('Error al obtener productos:', error);
-                setProductos([]);
+                setError('No hay productos Disponibles'); // Guardar el mensaje de error
+                setProductos([]); // Establecer productos como un arreglo vacío
             }
         };
 
         obtenerProductos();
-        console.log("Filtros:", filtros);
     }, [filtros]);
 
     return (
         <div className="contenedor-cards">
-            {productos.length > 0 && productos.map(producto => (
+            {error && <div className="mensaje-error">{error}</div>}
+            {productos.map(producto => (
                 <CardProducto
                     key={producto.id}
                     nombre={producto.nombre}
@@ -72,3 +77,4 @@ export const ContenedorCards = ({ filtros }) => {
         </div>
     );
 };
+
