@@ -9,15 +9,20 @@ import { Footer } from '../../componentes/Footer';
 export const CuerpoRegistrarProducto = () => {
     const location = useLocation();
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+    const [productoActualizado, setProductoActualizado] = useState(null);
 
     const manejarEditar = (producto) => {
         setProductoSeleccionado(producto);
     };
 
+    const manejarActualizacionVista = (producto) => {
+        setProductoActualizado(producto);
+    };
+
     return (
         <div className="cuerpo-registrar">
-            <ContenedorRegistrarProducto estado={location.state} productoSeleccionado={productoSeleccionado}/>
-            <TablaProductos estado={location.state} onEdit={manejarEditar} />
+            <ContenedorRegistrarProducto estado={location.state} productoSeleccionado={productoSeleccionado} onEdit={manejarActualizacionVista}/>
+            <TablaProductos estado={location.state} onEdit={manejarEditar} productoActualizado={productoActualizado} />
         </div>
     );
 };

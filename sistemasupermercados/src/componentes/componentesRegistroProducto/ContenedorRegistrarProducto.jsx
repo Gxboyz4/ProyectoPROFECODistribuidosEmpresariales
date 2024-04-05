@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../estilos/estilosRegistroProducto/ContenedorRegistrarProducto.css';
 
-export const ContenedorRegistrarProducto = ({ estado, productoSeleccionado }) => {
+export const ContenedorRegistrarProducto = ({ estado, productoSeleccionado, onEdit }) => {
     const idSupermercado = estado.data.id;
     const nombreSupermercado = estado.data.nombre;
     const [nombre, setNombre] = useState('');
@@ -63,6 +63,7 @@ export const ContenedorRegistrarProducto = ({ estado, productoSeleccionado }) =>
             });
 
             if (response.ok) {
+                onEdit(productoActualizado);
                 setProductoActual(null);
                 setExito("Producto actualizado");
                 setNombre('');
@@ -100,6 +101,7 @@ export const ContenedorRegistrarProducto = ({ estado, productoSeleccionado }) =>
             });
 
             if (response.ok) {
+                onEdit(nuevoProducto);
                 escribirImagenEnDirectorio(imagenFile);
                 setExito("Producto registrado");
                 setNombre('');

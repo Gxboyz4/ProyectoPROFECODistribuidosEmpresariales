@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "../../estilos/estilosRegistrar/ContenedorRegistrar.css";
 import { Link } from 'react-router-dom'; 
 import { useNavigate } from 'react-router-dom';
+import SweetAlert from '../SweetAlert'; // Importa el componente SweetAlert
 
 export const ContenedorRegistrar = () => {
     const [correo, setCorreo] = useState('');
@@ -9,6 +10,7 @@ export const ContenedorRegistrar = () => {
     const [nombre, setNombre] = useState('');
     const [direccion, setDireccion] = useState('');
     const [error, setError] = useState('');
+    const [showAlert, setShowAlert] = useState(false); // Estado para controlar la visibilidad del SweetAlert
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -31,7 +33,7 @@ export const ContenedorRegistrar = () => {
 
             if (response.ok) {
                 setError('');
-                navigate('/')
+                setShowAlert(true);
             } else {
                 const data = await response.json();
                 setError(data.message); // Muestra el mensaje de error proporcionado por la API
@@ -41,6 +43,12 @@ export const ContenedorRegistrar = () => {
             setError('Error al registrar el supermercado');
         }
     };
+
+    // Función para manejar la confirmación del SweetAlert y redireccionar
+    const handleConfirmAlert = () => {
+        navigate('/');
+    };
+
     return (
         <div className="registro-form-container">
             <h2 className="titulo-registro">Registro de Supermercados</h2>
@@ -54,6 +62,14 @@ export const ContenedorRegistrar = () => {
              <Link to="/" className="link-registro">¿Ya está registrado? Click aquí</Link>
             </form>
             {error && <label className="mensaje-error">{error}</label>}
+            {showAlert && (
+                <SweetAlert
+                    message="¡Registro exitoso! ¿Desea navegar a la página de inicio?"
+                    type="success"
+                    onConfirm={handleConfirmAlert}
+                    onCancel={() => setShowAlert(false)}
+                />
+            )}
         </div>
     );
 };

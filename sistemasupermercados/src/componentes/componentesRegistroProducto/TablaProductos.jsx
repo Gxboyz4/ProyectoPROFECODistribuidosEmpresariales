@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import '../../estilos/estilosRegistroProducto/TablaProductos.css';
 
-export const TablaProductos = ({ estado, onEdit  }) => {
-  
+export const TablaProductos = ({ estado, onEdit, productoActualizado }) => {
+
   const idSupermercado = estado.data.id;
   const [data, setData] = useState([]);
   const [pagina, setPagina] = useState(1);
@@ -12,6 +12,10 @@ export const TablaProductos = ({ estado, onEdit  }) => {
   const onDelete = (id) => {
     eliminarProducto(id);
   };
+
+  useEffect(() => {
+    cargarProductos();
+  }, [productoActualizado]);
 
   const cargarProductos = async () => {
     try {
@@ -27,13 +31,13 @@ export const TablaProductos = ({ estado, onEdit  }) => {
     } catch (error) {
       setPagina(paginaActual);
     }
-  }; 
+  };
 
   const eliminarProducto = async (id) => {
     try {
       const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/eliminar/${id}`, {
-          method: 'DELETE'
-      });  
+        method: 'DELETE'
+      });
       if (response.ok) {
         console.log("Producto eliminado");
         cargarProductos(); // Llama a cargarProductos después de eliminar
