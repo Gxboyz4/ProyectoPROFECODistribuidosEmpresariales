@@ -16,7 +16,7 @@ public class PublicadorOfertas implements IPublicador{
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             String jsonOferta = ConvertidorJSON.convertirOfertaAJson(oferta);
-            channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
+            //channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
             channel.basicPublish(EXCHANGE_NAME, "", null, jsonOferta.getBytes("UTF-8"));
         }catch(Exception ex){
             System.out.println("Error al publicar oferta");

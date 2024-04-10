@@ -1,13 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../estilos/Header.css';
 import logoProfeco from '../img/logo-profeco.png';
 import iconoNotificacion from '../img/iconos/icono_notificacion.png';
-
+import { Client } from '@stomp/stompjs'
 export const Header = ({ onSearch }) => {
   const [nombreProducto, setNombreProducto] = useState('');
   const [mostrarNotificaciones, setMostrarNotificaciones] = useState(false);
-  const [notificaciones, setNotificaciones] = useState(['Pepsi', 'Jabón', 'Coca cola']);
+  const [notificaciones, setNotificaciones] = useState([]);
 
+  useEffect(() => {
+    const client = new Client({
+      brokerURL: 'ws://localhost:15674/ws',
+      onConnect: () => {
+        client.subscribe('/exchange/ofertas', message => {
+          const mensaje = JSON.parse(message.body);
+          
+          
+          if (!notificaciones.includes(mensaje.nombre)) {
+            setNotificaciones(prevNotificaciones => [...prevNotificaciones, mensaje]);
+          }
+        });
+      }
+    });
+    client.activate();
+
+    return () => {
+      client.deactivate(); 
+    };
+  }, []); 
+
+  
 
   const manejarCambios = (event) => {
     setNombreProducto(event.target.value);
@@ -22,7 +44,7 @@ export const Header = ({ onSearch }) => {
 
   const desplegarNotificacion = (producto) => {
     return (
-      <span className='notificacion'> {`¡El producto ${producto} esta en oferta!`} </span>
+      <span className='notificacion'> {`¡Oferta ${producto.nombre}, de  ${producto.nombreSupermercado} a $${producto.precio} en $${producto.precioOferta}!`} </span>
     );
   }
 
@@ -72,7 +94,7 @@ export const Header = ({ onSearch }) => {
           </div>
         )}
       </div>
-      
+
     </header>
   );
 };
