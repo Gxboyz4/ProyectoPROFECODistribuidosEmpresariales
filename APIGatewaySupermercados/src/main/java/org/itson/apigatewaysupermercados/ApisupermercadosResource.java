@@ -82,36 +82,36 @@ public class ApisupermercadosResource {
         }
         if (correo != null && contrasenia != null) {
             return "correo=" + correo + "&contrasenia=" + contrasenia;
-        } 
+        }
         if (idSupermercado != null) {
             return "idSupermercado=" + idSupermercado + "&pagina=" + pagina;
         }
         int parametrosAdjuntos = 0;
         String cadenaConsulta = "";
         if (nombreSuper != null) {
-            cadenaConsulta+="nombreSuper="+nombreSuper;
+            cadenaConsulta += "nombreSuper=" + nombreSuper;
             parametrosAdjuntos++;
         }
         if (nombreProducto != null) {
-            if(parametrosAdjuntos!=0){
-                cadenaConsulta+="&";
-            }else{
+            if (parametrosAdjuntos != 0) {
+                cadenaConsulta += "&";
+            } else {
                 parametrosAdjuntos++;
             }
-            cadenaConsulta+="nombreProducto=" + nombreProducto;
+            cadenaConsulta += "nombreProducto=" + nombreProducto;
         }
         if (categoria != null) {
-            if(parametrosAdjuntos!=0){
-                cadenaConsulta+="&";
-            }else{
+            if (parametrosAdjuntos != 0) {
+                cadenaConsulta += "&";
+            } else {
                 parametrosAdjuntos++;
             }
-            cadenaConsulta+="categoria=" + categoria;
+            cadenaConsulta += "categoria=" + categoria;
         }
-        cadenaConsulta+= "&pagina=" + pagina;
-        if(parametrosAdjuntos!=0){
+        cadenaConsulta += "&pagina=" + pagina;
+        if (parametrosAdjuntos != 0) {
             return cadenaConsulta;
-        }else{
+        } else {
             return null;
         }
     }
@@ -210,6 +210,29 @@ public class ApisupermercadosResource {
                     case "consultarpagina":
                         System.out.println("Metodo " + metodo + " del servicio " + servicio);
                         url += "/";
+                        break;
+                    default:
+                        return null;
+                }
+                break;
+            case "ofertas":
+                url += "GestorOfertas/resources/ofertas";
+                switch (metodo) {
+                    case "registrar":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    case "actualizar":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    case "eliminar":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    case "consultarofertasidsuper":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/query?";
                         break;
                     default:
                         return null;
