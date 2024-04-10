@@ -17,7 +17,7 @@ export const ContenedorLogin = () => {
             const data = await response.json();
             console.log('Respuesta del servidor:', data);
             setError('');
-            navigate('/registroproductos',{state:{data}})
+            navigate('/gestionofertas',{state:{data}})
           } else {
             console.log('Error, usuario no encontrado:', response.status);
             setError('Usuario o contraseña incorrectos');

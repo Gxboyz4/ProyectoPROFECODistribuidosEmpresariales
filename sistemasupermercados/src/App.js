@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { CuerpoRegistrarSupermercado } from './componentes/componentesRegistrar/CuerpoRegistrarSupermercado';
 import { CuerpoRegistrarProducto } from './componentes/componentesRegistroProducto/CuerpoRegistrarProducto';
 import { CuerpoLogin } from './componentes/componentesLogin/CuerpoLogin';
+import { CuerpoGestionOfertas } from './componentes/componentesOfertas/CuerpoGestionOfertas';
 
 const App = () => {
   return (
@@ -14,6 +15,8 @@ const App = () => {
         <Route path="/registrar" element={<CuerpoRegistrarSupermercado />} />
         {/* Ruta para el componente de página productos*/}
        <Route path="/registroproductos" element={<CuerpoRegistrarProducto />} />
+        {/* Ruta para el componente de página gestionar ofertas*/}
+        <Route path="/gestionofertas" element={<CuerpoGestionOfertas />} />
         {/* ... */}
       </Routes>
     </Router>

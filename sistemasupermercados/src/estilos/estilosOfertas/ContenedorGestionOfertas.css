@@ -1,0 +1,77 @@
+.gestionofertas-form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    position: relative;
+}
+
+.gestionofertas-form-container .titulo-gestionofertas {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.gestionofertas-form-container form {
+    margin-bottom: 20px;
+}
+
+.gestionofertas-form-container input[type='text'],
+.gestionofertas-form-container input[type='number'],
+.gestionofertas-form-container input[type='date'],
+.gestionofertas-form-container select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.gestionofertas-form-container .botonGestionofertas {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #9C1945;
+    color: #222;
+    cursor: pointer;
+}
+
+.gestionofertas-form-container .botonGestionofertas:hover {
+    background-color: #5f102a;
+}
+
+.gestionofertas-form-container .mensaje-error {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.gestionofertas-form-container .mensaje-exito {
+    color: green;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.gestionofertas-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.gestionofertas-link:hover {
+    text-decoration: underline;
+}
+
+.link-gestionofertas {
+    display: block;
+    margin-top: 10px;
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}
