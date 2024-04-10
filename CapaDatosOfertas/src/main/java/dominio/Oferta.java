@@ -30,26 +30,24 @@ public class Oferta {
     public Oferta() {
     }
 
-    public Oferta(String id, String nombre, String idSupermercado, String nombreSupermercado, String categoria, double precio, String direccionImagen, double precioOferta, String fechaInicio, String fechaFinal) {
+    public Oferta(String id, String nombre, String idSupermercado, String nombreSupermercado, String categoria, double precio, double precioOferta, String fechaInicio, String fechaFinal) {
         this.id = id;
         this.nombre = nombre;
         this.idSupermercado = idSupermercado;
         this.nombreSupermercado = nombreSupermercado;
         this.categoria = categoria;
         this.precio = precio;
-        this.direccionImagen = direccionImagen;
         this.precioOferta = precioOferta;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
     }
 
-    public Oferta(String nombre, String idSupermercado, String nombreSupermercado, String categoria, double precio, String direccionImagen, double precioOferta, String fechaInicio, String fechaFinal) {
+    public Oferta(String nombre, String idSupermercado, String nombreSupermercado, String categoria, double precio, double precioOferta, String fechaInicio, String fechaFinal) {
         this.nombre = nombre;
         this.idSupermercado = idSupermercado;
         this.nombreSupermercado = nombreSupermercado;
         this.categoria = categoria;
         this.precio = precio;
-        this.direccionImagen = direccionImagen;
         this.precioOferta = precioOferta;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
