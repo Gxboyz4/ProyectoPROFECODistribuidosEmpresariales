@@ -22,11 +22,13 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+import publicador.IPublicador;
+import publicador.PublicadorOfertas;
 
 /**
  * REST Web Service
  *
- * @author julio
+ * @author jcho
  */
 @Path("ofertas")
 @RequestScoped
@@ -36,6 +38,7 @@ public class OfertasResource {
     private UriInfo context;
     private FachadaDAO dao;
     private final int NUM_REGISTROS_POR_PAGINA = 10;
+    private final IPublicador publicador = new PublicadorOfertas();
 
     /**
      * Creates a new instance of OfertasResource
@@ -50,6 +53,7 @@ public class OfertasResource {
     public Response registrarProducto(Oferta oferta) {
         if (oferta != null && oferta.getNombre() != null && oferta.getIdSupermercado() != null) {
             Oferta ofertaRegistrada = dao.registrarOferta(oferta);
+            publicador.publicarOferta(ofertaRegistrada);
             return Response.ok().entity(ofertaRegistrada).build();
         }
         return Response.status(404).build();

@@ -27,6 +27,11 @@
             <artifactId>CapaDatosOfertas</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.itson</groupId>
+            <artifactId>PublicadorOfertas</artifactId>
+            <version>1</version>
+        </dependency>
     </dependencies>
     
     <build>
