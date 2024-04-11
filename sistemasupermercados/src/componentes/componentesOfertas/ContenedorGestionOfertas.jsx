@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../estilos/estilosOfertas/ContenedorGestionOfertas.css';
 
-export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, onEdit}) => {
+export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoSeleccionado, onEdit}) => {
     const idSupermercado = estado.data.id;
     const nombreSupermercado = estado.data.nombre;
     const [nombre, setNombre] = useState('');
@@ -13,22 +13,21 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, onEdit}) 
     const [error, setError] = useState('');
     const [mensajeExito, setExito] = useState('');
 
+    const [productoActual, setProductoActual] = useState(productoSeleccionado);
+
     const [ofertaActual, setOfertaActual] = useState(ofertaSeleccionada);
 
     useEffect(() => {
-        setOfertaActual(ofertaSeleccionada);
-    }, [ofertaSeleccionada]);
+        setProductoActual(productoSeleccionado);
+    }, [productoSeleccionado]);
 
     useEffect(() => {
-        if (ofertaActual) {
-            setNombre(ofertaActual.nombre);
-            setCategoria(ofertaActual.categoria);
-            setPrecio(ofertaActual.precio);
-            setFechaInicio(ofertaActual.fechaInicio)
-            setFechaFin(ofertaActual.fechaFin);
-            setPrecioOferta(ofertaActual.precioOferta);
+        if (productoActual) {
+            setNombre(productoActual.nombre);
+            setCategoria(productoActual.categoria);
+            setPrecio(productoActual.precio);
         }
-    }, [ofertaActual]);
+    }, [productoActual]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -117,9 +116,9 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, onEdit}) 
             <h2 className="titulo-gestionofertas">Gestión de ofertas</h2>
             <h3>Información producto</h3>
             <form onSubmit={ofertaActual ? handleUpdate : handleSubmit}>
-                <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
-                <input type="text" placeholder="Categoría" value={categoria} onChange={(e) => setCategoria(e.target.value)} required />
-                <input type="number" placeholder="Precio" value={precio} onChange={(e) => setPrecio(e.target.value)} required />
+                <input type="text" placeholder="Nombre" readOnly value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+                <input type="text" placeholder="Categoría" readOnly value={categoria} onChange={(e) => setCategoria(e.target.value)} required />
+                <input type="number" placeholder="Precio" readOnly value={precio} onChange={(e) => setPrecio(e.target.value)} required />
                 <h3>Información oferta</h3>
                 <input type="date" placeholder="Fecha de inicio" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} required />
                 <input type="date" placeholder="Fecha de fin" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} required />

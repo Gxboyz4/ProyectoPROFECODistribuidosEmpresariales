@@ -9,6 +9,9 @@ export const TablaOfertas = ({ estado, onEdit, ofertaActualizada }) => {
   const [pagina, setPagina] = useState(1);
   const [paginaActual, setPaginaActual] = useState(1);
 
+  const onDelete = (id) => {
+  
+  };
 
   useEffect(() => {
     cargarOfertas();
@@ -34,6 +37,7 @@ export const TablaOfertas = ({ estado, onEdit, ofertaActualizada }) => {
     cargarOfertas();
   }, [idSupermercado, pagina, paginaActual]);
 
+  
   return (
     <div className="tabla-container">
       <h2 className="titulo-tabla">Lista de ofertas</h2>
@@ -59,7 +63,8 @@ export const TablaOfertas = ({ estado, onEdit, ofertaActualizada }) => {
               <td>{item.fechaFin}</td>
               <td>{item.precioOferta}</td>
               <td className="acciones">
-                <Button variant="primary" onClick={() => onEdit(item)}>Agregar oferta</Button>
+                <Button variant="primary" onClick={() => onEdit(item)}>Editar</Button>
+                <Button variant="danger" onClick={() => onDelete(item.id)}>Eliminar</Button>
               </td>
             </tr>
           ))}

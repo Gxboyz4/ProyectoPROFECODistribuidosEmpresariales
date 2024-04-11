@@ -24,12 +24,13 @@ export const CuerpoGestionOfertas = () => {
     const manejarProductoSeleccionado = (producto) => {
         setProductoSeleccionado(producto);
     };
+    
 
 
 
     return (
         <div className="cuerpo-gestionofertas">
-            <ContenedorGestionOfertas estado={location.state} productoSeleccionado={ofertaSeleccionada} onEdit={manejarActualizacionVista}/>
+            <ContenedorGestionOfertas estado={location.state} ofertaSeleccionada={ofertaSeleccionada} productoSeleccionado={productoSeleccionado} onEdit={manejarActualizacionVista}/>
             <div>
             <TablaProductos estado={location.state} onEdit={manejarProductoSeleccionado} />
             <TablaOfertas estado={location.state} onEdit={manejarEditar} ofertaActualizada={ofertaActualizada}/>
