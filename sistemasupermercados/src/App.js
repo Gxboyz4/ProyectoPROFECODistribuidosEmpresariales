@@ -4,6 +4,7 @@ import { CuerpoRegistrarSupermercado } from './componentes/componentesRegistrar/
 import { CuerpoRegistrarProducto } from './componentes/componentesRegistroProducto/CuerpoRegistrarProducto';
 import { CuerpoLogin } from './componentes/componentesLogin/CuerpoLogin';
 import { CuerpoGestionOfertas } from './componentes/componentesOfertas/CuerpoGestionOfertas';
+import { CuerpoMenu } from './componentes/componentesMenu/CuerpoMenu';
 
 const App = () => {
   return (
@@ -17,6 +18,8 @@ const App = () => {
        <Route path="/registroproductos" element={<CuerpoRegistrarProducto />} />
         {/* Ruta para el componente de página gestionar ofertas*/}
         <Route path="/gestionofertas" element={<CuerpoGestionOfertas />} />
+         {/* Ruta para el componente de página menú*/}
+         <Route path="/menu" element={<CuerpoMenu />} />
         {/* ... */}
       </Routes>
     </Router>
