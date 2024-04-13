@@ -31,7 +31,7 @@ export const CuerpoGestionOfertas = () => {
     return (
         <div className="cuerpo-gestionofertas">
             <ContenedorGestionOfertas estado={location.state} ofertaSeleccionada={ofertaSeleccionada} productoSeleccionado={productoSeleccionado} onEdit={manejarActualizacionVista}/>
-            <div>
+            <div className='cuerpo-tablas'>
             <TablaProductos estado={location.state} onEdit={manejarProductoSeleccionado} />
             <TablaOfertas estado={location.state} onEdit={manejarEditar} ofertaActualizada={ofertaActualizada}/>
             </div>

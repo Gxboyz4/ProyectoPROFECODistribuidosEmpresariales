@@ -13,6 +13,22 @@ export const TablaProductos = ({ estado, onEdit, productoActualizado }) => {
     eliminarProducto(id);
   };
 
+  const eliminarProducto = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/eliminar/${id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        console.log("Producto eliminado");
+        cargarProductos(); // Llama a cargarProductos después de eliminar
+      } else {
+        console.error('Hubo un error al eliminar:', response.statusText);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     cargarProductos();
   }, [productoActualizado]);
@@ -30,22 +46,6 @@ export const TablaProductos = ({ estado, onEdit, productoActualizado }) => {
       }
     } catch (error) {
       setPagina(paginaActual);
-    }
-  };
-
-  const eliminarProducto = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/eliminar/${id}`, {
-        method: 'DELETE'
-      });
-      if (response.ok) {
-        console.log("Producto eliminado");
-        cargarProductos(); // Llama a cargarProductos después de eliminar
-      } else {
-        console.error('Hubo un error al eliminar:', response.statusText);
-      }
-    } catch (error) {
-      console.error(error);
     }
   };
 

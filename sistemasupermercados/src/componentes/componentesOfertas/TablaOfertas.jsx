@@ -10,9 +10,24 @@ export const TablaOfertas = ({ estado, onEdit, ofertaActualizada }) => {
   const [paginaActual, setPaginaActual] = useState(1);
 
   const onDelete = (id) => {
-  
+  eliminarOferta(id);
   };
 
+  const eliminarOferta= async (id) => {
+    try {
+      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/ofertas/eliminar/${id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        console.log("Oferta eliminada");
+        cargarOfertas(); //
+      } else {
+        console.error('Hubo un error al eliminar:', response.statusText);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
     cargarOfertas();
   }, [ofertaActualizada]);
@@ -48,7 +63,7 @@ export const TablaOfertas = ({ estado, onEdit, ofertaActualizada }) => {
             <th>Categoría</th>
             <th>Precio</th>
             <th>FechaInicio</th>
-            <th>FechaFin</th>
+            <th>FechaFinal</th>
             <th>PrecioOferta</th>
             <th>Acciones</th>
           </tr>
@@ -60,7 +75,7 @@ export const TablaOfertas = ({ estado, onEdit, ofertaActualizada }) => {
               <td>{item.categoria}</td>
               <td>{item.precio}</td>
               <td>{item.fechaInicio}</td>
-              <td>{item.fechaFin}</td>
+              <td>{item.fechaFinal}</td>
               <td>{item.precioOferta}</td>
               <td className="acciones">
                 <Button variant="primary" onClick={() => onEdit(item)}>Editar</Button>

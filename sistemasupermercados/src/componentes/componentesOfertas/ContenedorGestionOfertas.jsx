@@ -8,7 +8,7 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoS
     const [categoria, setCategoria] = useState('');
     const [precio, setPrecio] = useState('');
     const [fechaInicio, setFechaInicio] = useState('');
-    const [fechaFin, setFechaFin] = useState('');
+    const [fechaFinal, setFechaFinal] = useState('');
     const [precioOferta, setPrecioOferta] = useState('');
     const [error, setError] = useState('');
     const [mensajeExito, setExito] = useState('');
@@ -22,12 +22,27 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoS
     }, [productoSeleccionado]);
 
     useEffect(() => {
+        setOfertaActual(ofertaSeleccionada);
+    }, [ofertaSeleccionada]);
+
+    useEffect(() => {
         if (productoActual) {
             setNombre(productoActual.nombre);
             setCategoria(productoActual.categoria);
             setPrecio(productoActual.precio);
         }
     }, [productoActual]);
+
+    useEffect(() => {
+        if (ofertaActual) {
+            setNombre(ofertaActual.nombre);
+            setCategoria(ofertaActual.categoria);
+            setPrecio(ofertaActual.precio);
+            setFechaInicio(ofertaActual.fechaInicio);
+            setFechaFinal(ofertaActual.fechaFinal);
+            setPrecioOferta(ofertaActual.precioOferta);
+        }
+    }, [ofertaActual]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +54,7 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoS
             precio: parseFloat(precio),
             precioOferta: parseFloat(precioOferta),
             fechaInicio,
-            fechaFin
+            fechaFinal
         };
 
         try {
@@ -56,7 +71,10 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoS
                 setExito("Oferta registrada");
                 setNombre('');
                 setCategoria('');
-                setPrecio('');
+                setPrecio('');  
+                setFechaInicio('');
+                setFechaFinal('');
+                setPrecioOferta('');
             } else {
                 const data = await response.json();
                 setError(data.message); // Muestra el mensaje de error proporcionado por la API
@@ -71,7 +89,7 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoS
         e.preventDefault();
         // Implementación de la actualización de la oferta
         const ofertaActualizada = {
-            id: ofertaActualizada.id,
+            id: ofertaActual.id,
             nombre,
             idSupermercado,
             nombreSupermercado,
@@ -79,7 +97,7 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoS
             precio: parseFloat(precio),
             precioOferta: parseFloat(precioOferta),
             fechaInicio,
-            fechaFin
+            fechaFinal
         };
 
         try {
@@ -98,8 +116,8 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoS
                 setNombre('');
                 setCategoria('');
                 setPrecio('');
-                setFechaInicio(null);
-                setFechaFin(null);
+                setFechaInicio('');
+                setFechaFinal('');
                 setPrecioOferta('');
             } else {
                 const data = await response.json();
@@ -111,6 +129,7 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoS
         }
     };
     
+    
     return (
         <div className="gestionofertas-form-container">
             <h2 className="titulo-gestionofertas">Gestión de ofertas</h2>
@@ -121,7 +140,7 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoS
                 <input type="number" placeholder="Precio" readOnly value={precio} onChange={(e) => setPrecio(e.target.value)} required />
                 <h3>Información oferta</h3>
                 <input type="date" placeholder="Fecha de inicio" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} required />
-                <input type="date" placeholder="Fecha de fin" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} required />
+                <input type="date" placeholder="Fecha de fin" value={fechaFinal} onChange={(e) => setFechaFinal(e.target.value)} required />
                 <input type="number" placeholder="Precio de la oferta" value={precioOferta} onChange={(e) => setPrecioOferta(e.target.value)} required />
                 <button type="submit" className="botonGestionofertas">{ofertaActual ? 'Actualizar' : 'Registrar'}</button>
 

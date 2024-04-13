@@ -5,3 +5,7 @@
     height: 100vh;
     background-color: #0e231e;
 }
+.cuerpo-tablas{
+    align-items: flex; 
+    padding: 50px;
+}

@@ -12,6 +12,7 @@ export const ContenedorRegistrarProducto = ({ estado, productoSeleccionado, onEd
     const [error, setError] = useState('');
     const [mensajeExito, setExito] = useState('');
 
+    
     const [productoActual, setProductoActual] = useState(productoSeleccionado);
 
     const escribirImagenEnDirectorio = (imagenFile) => {

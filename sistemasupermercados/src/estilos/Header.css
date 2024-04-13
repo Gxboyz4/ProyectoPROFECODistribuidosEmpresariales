@@ -16,26 +16,42 @@
 .logo {
   height: 72px;
 }
-.menu-options a {
-  margin-right: 20px;
-  color: #fff;
-  text-decoration: none;
-}
 
+.menu-text {
+  align-items: center;
+  text-align: center;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-weight: bold; 
+  font-size: 30px;
+}
 .menu-options a:hover {
   text-decoration: underline;
 }
 .menu-options button {
-  background-color: #0e231e;
+  background-color: #64630f;
   color: #fff;
   border: 1px solid #0e231e;
   padding: 10px 20px;
-  margin-right: 10px; /* Ajusta el margen según necesites */
+  margin-right: 10px;
   transition: transform 0.2s, border-color 0.2s;
 }
 
 .menu-options button:hover {
   border-color: #ccc;
-  transform: scale(1.05); /* Hace que el botón se agrande un poco al pasar el cursor por encima */
+  transform: scale(1.05); 
 }
+
+.icono-salir{
+  margin-left: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.icono-salir img {
+  height: 30px;
+  width: 30px;
+  filter: invert(1);
+}
+
 

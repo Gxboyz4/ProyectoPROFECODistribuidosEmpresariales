@@ -11,6 +11,9 @@ export const CuerpoRegistrarProducto = () => {
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [productoActualizado, setProductoActualizado] = useState(null);
 
+
+    
+
     const manejarEditar = (producto) => {
         setProductoSeleccionado(producto);
     };
