@@ -50,8 +50,3 @@
   font-size: 1.2em;
 }
 
-@media (max-width: 568px) {
-  .card-container {
-    width: calc(100% - 40px); 
-  }
-}

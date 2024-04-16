@@ -21,7 +21,7 @@ import org.bson.conversions.Bson;
  */
 public class InconsistenciasDAO implements IFachadaDAO{
     private final MongoDatabase BASE_DATOS;
-    private final String NOMBRE_COLECCION = "supermercados";
+    private final String NOMBRE_COLECCION = "inconsistencias";
     private MongoCollection<Inconsistencia> coleccion;
 
     public InconsistenciasDAO() {
