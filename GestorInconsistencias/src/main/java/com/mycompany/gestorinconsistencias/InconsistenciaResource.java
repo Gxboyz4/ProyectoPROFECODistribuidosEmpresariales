@@ -20,6 +20,8 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
+import publicador.IPublicador;
+import publicador.PublicadorInconsistencias;
 
 /**
  * REST Web Service
@@ -33,9 +35,11 @@ public class InconsistenciaResource {
     @Context
     private UriInfo context;
     private IFachadaDAO dao;
-
-    public InconsistenciaResource() {
+    private ConsumidorInconsistencias consumidor;
+    public InconsistenciaResource() throws Exception {
         dao = new FachadaDAO();
+        consumidor = new ConsumidorInconsistencias();
+        consumidor.consumir();
     }
 
     //http://localhost:8080/GestorInconsistencias/resources/inconsistencias/'idSupermercado'
@@ -92,6 +96,7 @@ public class InconsistenciaResource {
             return Response.ok().entity(inconsistencia).build();
         }
     }
+    
 }
 
   
