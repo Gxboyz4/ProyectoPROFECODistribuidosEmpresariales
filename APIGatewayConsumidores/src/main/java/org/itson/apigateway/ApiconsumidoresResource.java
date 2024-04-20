@@ -77,29 +77,39 @@ public class ApiconsumidoresResource {
         Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
         return invocationBuilder;
     }
-    
+
     private String obtenerUrl(String servicio, String metodo) {
         String url = "http://localhost:8080/";
-
+        
         switch (servicio) {
             case "consumidores":
                 url += "GestorConsumidores/resources/consumidores";
+                switch (metodo) {
+                    case "registrar":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    case "autenticar":
+                        url += "/query?";
+                        break;
+                    case "actualizar":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/";
+                        break;
+                    default:
+                        return null;
+                }
                 break;
-            default:
-                return null;
-        }
-
-        switch (metodo) {
-            case "registrar":
-                System.out.println("Metodo " + metodo + " del servicio " + servicio);
-                url += "/";
-                break;
-            case "autenticar":
-                url += "/query?";
-                break;
-            case "actualizar":
-                System.out.println("Metodo " + metodo + " del servicio " + servicio);
-                url += "/";
+            case "inconsistencias":
+                url += "PublicadorRetroalimentacion/resources/publicador";
+                switch (metodo) {
+                    case "publicar":
+                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
+                        url += "/inconsistencia";
+                        break;
+                    default:
+                        return null;
+                }
                 break;
             default:
                 return null;
