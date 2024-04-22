@@ -2,7 +2,7 @@ import React from "react";
 import "../../estilos/estilosBusquedaProductos/CardProducto.css";
 import { FrmInconsistencias } from "../componentesInconsistencias/FrmInconsistencia";
 
-export const CardProducto = ({ nombre, nombreSupermercado, categoria, precio, imagenUrl }) => {
+export const CardProducto = ({ idSupermercado,nombre, nombreSupermercado, categoria, precio, imagenUrl }) => {
     const openModal = () => {
         // Lógica para abrir el modal
         // Aquí puedes hacer cualquier cosa antes de mostrar el modal
@@ -18,7 +18,7 @@ export const CardProducto = ({ nombre, nombreSupermercado, categoria, precio, im
                 <p className="card-categoria">{categoria}</p>
                 <p className="card-precio">${precio}</p>
             </div>
-            <FrmInconsistencias />
+            <FrmInconsistencias idSupermercado = {idSupermercado}/>
         </div>
     );
 };

@@ -67,6 +67,7 @@ export const ContenedorCards = ({ filtros }) => {
             {productos.map(producto => (
                 <CardProducto
                     key={producto.id}
+                    idSupermercado = {producto.idSupermercado}
                     nombre={producto.nombre}
                     nombreSupermercado={producto.nombreSupermercado}
                     categoria={producto.categoria}

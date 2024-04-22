@@ -35,11 +35,8 @@ public class InconsistenciaResource {
     @Context
     private UriInfo context;
     private IFachadaDAO dao;
-    private ConsumidorInconsistencias consumidor;
     public InconsistenciaResource() throws Exception {
         dao = new FachadaDAO();
-        consumidor = new ConsumidorInconsistencias();
-        consumidor.consumir();
     }
 
     //http://localhost:8080/GestorInconsistencias/resources/inconsistencias/'idSupermercado'

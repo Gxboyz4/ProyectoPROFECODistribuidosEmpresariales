@@ -20,13 +20,12 @@ import java.util.logging.Logger;
  * @author 
  */
 public class ConsumidorInconsistencias {
-    private final String EXCHANGE_NAME = "inconsistencias";
-    private IFachadaDAO dao = new FachadaDAO();
+    private static final String EXCHANGE_NAME = "inconsistencias";
+    private static IFachadaDAO dao = new FachadaDAO();
     public ConsumidorInconsistencias() {
     }
-    
-    public void consumir()
-    {
+    public static void main(String[] args) {
+        
         try{
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost"); // Change this if RabbitMQ is not on localhost
@@ -64,5 +63,6 @@ public class ConsumidorInconsistencias {
         e.printStackTrace();
     }
     }
+    
 
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactModal from "react-modal";
 import "../../estilos/estilosInconsistencias/frmInconsistencias.css";
 
-export const FrmInconsistencias = ({}) => {
+export const FrmInconsistencias = ({idSupermercado, idProducto}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [descripcion, setDescripcion] = useState('');
 
@@ -21,11 +21,12 @@ export const FrmInconsistencias = ({}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const nuevaInconsistencia = {
-            descripcion
+            descripcion,
+            idSupermercado
         };
 
         try {
-            const response = await fetch('http://localhost:8080/GestorInconsistencias/resources/inconsistencias/', {
+            const response = await fetch('http://localhost:8080/APIGatewayConsumidores/resources/apiconsumidores/inconsistencias/publicar/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
