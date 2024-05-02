@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { CardProducto } from "./CardProducto";
 import "../../estilos/estilosBusquedaProductos/ContenedorCards.css";
+import { useAuth0 } from "@auth0/auth0-react"
 
 export const ContenedorCards = ({ filtros }) => {
     const [productos, setProductos] = useState([]);
     const [error, setError] = useState(null);
+    const [token, setToken] = useState(null);
+    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+
+    useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setToken(await getAccessTokenSilently());
+      } catch (error) {}
+    };
+
+    if (isAuthenticated) {
+      fetchData();
+    }
+  }, [getAccessTokenSilently, isAuthenticated]);
 
     useEffect(() => {
         const obtenerProductos = async () => {
@@ -42,7 +57,10 @@ export const ContenedorCards = ({ filtros }) => {
                     urlPeticion = "http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/consultarpagina/1";
                 }
                 
-                const response = await fetch(urlPeticion);
+                const response = await fetch(urlPeticion,{
+                    headers: {'Authorization': `Bearer${token}`}
+                }
+                );
                 if (!response.ok) {
                     throw new Error('No hay productos Disponibles');
                 }

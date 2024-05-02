@@ -1,11 +1,11 @@
 import React from "react";
-import { ContenedorLoginProfeco } from "./ContenedorLoginProfeco";
 import '../../estilos/estilosLogin/CuerpoLoginProfeco.css';
+import {LoginButton} from "./componentes/componentesAutentication/LoginButton"
 
 export const CuerpoLoginProfeco = () => {
     return (
       <div className="cuerpo-login">
-        <ContenedorLoginProfeco/>
+        <LoginButton/>
       </div>
     );
   };

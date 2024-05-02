@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import '../estilos/Header.css';
 import logoProfeco from '../img/logo-profeco.png';
 import iconoNotificacion from '../img/iconos/icono_notificacion.png';
+import iconoLogout from '../img/iconos/iconologout.png';
+import { useAuth0 } from "@auth0/auth0-react";
+
 import { Client } from '@stomp/stompjs'
 export const Header = ({ onSearch }) => {
   const [nombreProducto, setNombreProducto] = useState('');
   const [mostrarNotificaciones, setMostrarNotificaciones] = useState(false);
   const [notificaciones, setNotificaciones] = useState([]);
+  const { logout } = useAuth0();
 
   useEffect(() => {
     const client = new Client({
@@ -14,7 +18,6 @@ export const Header = ({ onSearch }) => {
       onConnect: () => {
         client.subscribe('/exchange/ofertas', message => {
           const mensaje = JSON.parse(message.body);
-          
           
           if (!notificaciones.includes(mensaje.nombre)) {
             setNotificaciones(prevNotificaciones => [...prevNotificaciones, mensaje]);
@@ -72,7 +75,7 @@ export const Header = ({ onSearch }) => {
       </div>
 
       <div className='iconos-container'>
-        <div className='icono-notificacion' onClick={() => setMostrarNotificaciones(!mostrarNotificaciones)}>
+        <div className='iconos-header' onClick={() => setMostrarNotificaciones(!mostrarNotificaciones)}>
           <img src={iconoNotificacion} alt="icono-notificacion" />
           {
             notificaciones.length > 0 &&
@@ -94,6 +97,9 @@ export const Header = ({ onSearch }) => {
           </div>
         )}
       </div>
+      <div className='iconos-header' onClick={() => logout()}>
+          <img src={iconoLogout} alt="icono-logout"/>
+        </div>
 
     </header>
   );

@@ -1,25 +1,16 @@
-
 import './App.css';
-//import { PaginaProductos } from './componentes/PaginaProductos';
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import {CuerpoRegistrarProfeco} from './componentes/componentesRegistrar/CuerpoRegistrarProfeco';
-import {CuerpoLoginProfeco} from './componentes/componentesLogin/CuerpoLoginProfeco'
-import {PaginaProductos} from './componentes/componentesBusquedaProductos/PaginaProductos';
+import { PaginaProductos } from "./componentes/componentesBusquedaProductos/PaginaProductos";
+import { useAuth0 } from "@auth0/auth0-react"
+import { LoginButton } from './componentes/componentesAutentication/LoginButton';
 
 const App = () => {
+  const { isAuthenticated} = useAuth0();
+
   return (
-    <Router>
-      <Routes> {/* Envuelve tus rutas dentro de <Routes> */}
-        {/* Ruta para el componente de inicio de sesión */}
-        <Route path="/" element={<CuerpoLoginProfeco />} />
-        {/* Ruta para el componente de registro */}
-        <Route path="/registrar" element={<CuerpoRegistrarProfeco />} />
-        {/* Ruta para el componente de página productos*/}
-       <Route path="/paginaproductos" element={<PaginaProductos />} />
-        {/* ... */}
-      </Routes>
-    </Router>
+    <div className="App">
+      {isAuthenticated ? <PaginaProductos /> : <LoginButton />}
+    </div>
   );
-};
+}
 
 export default App;

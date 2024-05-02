@@ -10,13 +10,13 @@
   padding: 0 20px; 
 }
 
-.icono-notificacion {
+.iconos-header {
   margin-left: 10px;
   cursor: pointer;
   position: relative;
 }
 
-.icono-notificacion img {
+.iconos-header img {
   height: 30px;
   width: 30px;
   filter: invert(1);
