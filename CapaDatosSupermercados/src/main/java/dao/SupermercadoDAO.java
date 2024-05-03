@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.itson.hashsha256.HashSHA256;
 
 /**
  *
@@ -35,6 +36,7 @@ public class SupermercadoDAO implements IFachadaDAO {
     @Override
     public Supermercado registrarSupermercado(Supermercado supermercado) {
         supermercado.generarID();
+        supermercado.setContrasenia(HashSHA256.sha256(supermercado.getContrasenia()));
         coleccion.insertOne(supermercado);
         return supermercado;
     }
@@ -60,11 +62,11 @@ public class SupermercadoDAO implements IFachadaDAO {
 
     @Override
     public Supermercado autenticar(String correo, String contrasenia) {
+        String passHasheada = HashSHA256.sha256(contrasenia);
         Bson filter = Filters.and(
             Filters.eq("correo", correo),
-            Filters.eq("contrasenia", contrasenia)
+            Filters.eq("contrasenia", passHasheada)
         );
-        
         return coleccion.find(filter).first();
     }
 

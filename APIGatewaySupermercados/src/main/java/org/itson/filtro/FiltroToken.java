@@ -29,7 +29,7 @@ import org.apache.http.util.EntityUtils;
 public class FiltroToken implements Filter {
 
     private static final boolean debug = true;
-    
+
     private final String uriApi = "https://dev-k6ciyg872mcyz0mm.us.auth0.com/userinfo";
 
     // The filter configuration object we are associated with.  If
@@ -62,36 +62,42 @@ public class FiltroToken implements Filter {
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-        throws IOException, ServletException {
+            throws IOException, ServletException {
 
-    HttpServletRequest req = (HttpServletRequest) request;
-    HttpServletResponse res = (HttpServletResponse) response;
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
 
-    String authHeader = req.getHeader("Authorization");
+        String authHeader = req.getHeader("Authorization");
 
-    if (authHeader != null && authHeader.startsWith("Bearer")) {
-        String token = authHeader.substring(7);
+        String url = req.getRequestURL().toString();
+        
+        if (url.contains("autenticar") || url.contains("supermercados/registrar")) {
+            chain.doFilter(request, response);
+        } else {
+            if (authHeader != null && authHeader.startsWith("Bearer")) {
+                String token = authHeader.substring(7);
 
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpGet httpGet = new HttpGet(uriApi);
-            httpGet.setHeader("Authorization", "Bearer " + token);
+                try (CloseableHttpClient client = HttpClients.createDefault()) {
+                    HttpGet httpGet = new HttpGet(uriApi);
+                    httpGet.setHeader("Authorization", "Bearer " + token);
 
-            HttpResponse httpResponse = client.execute(httpGet);
-            int statusCode = httpResponse.getStatusLine().getStatusCode();
+                    HttpResponse httpResponse = client.execute(httpGet);
+                    int statusCode = httpResponse.getStatusLine().getStatusCode();
 
-            if (statusCode == 200) {
-                chain.doFilter(request, response);
+                    if (statusCode == 200) {
+                        chain.doFilter(request, response);
+                    } else {
+                        res.sendError(401, "No tienes permiso");
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error al obtener la información del usuario: " + e);
+                    res.sendError(401, "No tienes permiso");
+                }
             } else {
                 res.sendError(401, "No tienes permiso");
             }
-        } catch (Exception e) {
-            System.err.println("Error al obtener la información del usuario: " + e);
-            res.sendError(401, "No tienes permiso");
         }
-    } else {
-        res.sendError(401, "No tienes permiso");
     }
-}
 
     /**
      * Return the filter configuration object for this filter.
