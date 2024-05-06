@@ -16,7 +16,10 @@ export const TablaOfertas = ({ estado, onEdit, ofertaActualizada }) => {
   const eliminarOferta= async (id) => {
     try {
       const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/ofertas/eliminar/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
       });
       if (response.ok) {
         console.log("Oferta eliminada");
@@ -34,7 +37,11 @@ export const TablaOfertas = ({ estado, onEdit, ofertaActualizada }) => {
 
   const cargarOfertas = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/ofertas/consultarofertasidsuper/query?idSupermercado=${idSupermercado}&pagina=${pagina}`);
+      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/ofertas/consultarofertasidsuper/query?idSupermercado=${idSupermercado}&pagina=${pagina}`,{
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
+      });
       if (response.ok) {
         const data = await response.json();
         setData(data);

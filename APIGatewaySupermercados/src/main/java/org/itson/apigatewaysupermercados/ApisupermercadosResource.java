@@ -20,6 +20,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -35,10 +36,14 @@ public class ApisupermercadosResource {
     @Path("/{servicio}/{metodo}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response enrutarSolicitudPost(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo, String cuerpo) {
+    public Response enrutarSolicitudPost(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo, String cuerpo,
+            @Context HttpHeaders headers) {
+        String tokenJWT = headers.getHeaderString("Authorization");
         String url = this.obtenerUrl(servicio, metodo);
         if (url != null) {
-            Response response = this.regresarInvocationBuilder(url).post(Entity.json(cuerpo));
+            Response response = tokenJWT == null 
+                    ? this.regresarInvocationBuilder(url).post(Entity.json(cuerpo))
+                    : this.regresarInvocationBuilder(url).header("Authorization", tokenJWT).post(Entity.json(cuerpo));
             return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
@@ -48,10 +53,12 @@ public class ApisupermercadosResource {
     @Path("/{servicio}/{metodo}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response enrutarSolicitudPut(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo, String cuerpo) {
+    public Response enrutarSolicitudPut(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo, String cuerpo,
+            @Context HttpHeaders headers) {
+        String tokenJWT = headers.getHeaderString("Authorization");
         String url = this.obtenerUrl(servicio, metodo);
         if (url != null) {
-            Response response = this.regresarInvocationBuilder(url).put(Entity.json(cuerpo));
+            Response response = this.regresarInvocationBuilder(url).header("Authorization", tokenJWT).put(Entity.json(cuerpo));
             return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
@@ -63,13 +70,16 @@ public class ApisupermercadosResource {
     public Response enrutarSolicitudQuery(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo,
             @QueryParam("correo") String correo, @QueryParam("contrasenia") String contrasenia, @QueryParam("nombreSuper") String nombreSuper,
             @QueryParam("nombreProducto") String nombreProducto, @QueryParam("categoria") String categoria, @QueryParam("idSupermercado") String idSupermercado,
-            @QueryParam("pagina") Integer pagina) {
+            @QueryParam("pagina") Integer pagina, @Context HttpHeaders headers) {
+        String tokenJWT = headers.getHeaderString("Authorization");
         String url = this.obtenerUrl(servicio, metodo);
         String filtroQuery = this.armarUrlQuery(correo, contrasenia, nombreSuper, nombreProducto, categoria, idSupermercado, pagina);
         if (filtroQuery != null) {
             if (url != null) {
                 url += filtroQuery;
-                Response response = this.regresarInvocationBuilder(url).get();
+                Response response = tokenJWT == null
+                    ? this.regresarInvocationBuilder(url).get()
+                    : this.regresarInvocationBuilder(url).header("Authorization", tokenJWT).get();
                 return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
             }
         }
@@ -119,10 +129,12 @@ public class ApisupermercadosResource {
     @GET
     @Path("/{servicio}/{metodo}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response enrutarSolicitudesGet(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo) {
+    public Response enrutarSolicitudesGet(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo,
+            @Context HttpHeaders headers) {
+        String tokenJWT = headers.getHeaderString("Authorization");
         String url = this.obtenerUrl(servicio, metodo);
         if (url != null) {
-            Response response = this.regresarInvocationBuilder(url).get();
+            Response response = this.regresarInvocationBuilder(url).header("Authorization", tokenJWT).get();
             return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
@@ -132,10 +144,13 @@ public class ApisupermercadosResource {
     @Path("/{servicio}/{metodo}/{parametroBusqueda}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response enrutarSolicitudesGetPorParametro(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo,
-            @PathParam("parametroBusqueda") String parametroBusqueda) {
+            @PathParam("parametroBusqueda") String parametroBusqueda ,@Context HttpHeaders headers) {
+        String tokenJWT = headers.getHeaderString("Authorization");
         String url = this.obtenerUrl(servicio, metodo) + parametroBusqueda;
         if (url != null) {
-            Response response = this.regresarInvocationBuilder(url).get();
+            Response response = tokenJWT == null 
+                    ? this.regresarInvocationBuilder(url).get()
+                    :this.regresarInvocationBuilder(url).header("Authorization", tokenJWT).get();
             return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
@@ -145,10 +160,11 @@ public class ApisupermercadosResource {
     @Path("/{servicio}/{metodo}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response enrutarSolicitudesDeletePorId(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo,
-            @PathParam("id") String id) {
+            @PathParam("id") String id,@Context HttpHeaders headers) {
+        String tokenJWT = headers.getHeaderString("Authorization");
         String url = this.obtenerUrl(servicio, metodo) + id;
         if (url != null) {
-            Response response = this.regresarInvocationBuilder(url).delete();
+            Response response = this.regresarInvocationBuilder(url).header("Authorization", tokenJWT).delete();
             return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
@@ -185,7 +201,7 @@ public class ApisupermercadosResource {
                 }
                 break;
             case "productos":
-                url += "GestorProductos/resources/productos";
+                url += "GestorDeProductos/resources/productos";
                 switch (metodo) {
                     case "registrar":
                         System.out.println("Metodo " + metodo + " del servicio " + servicio);

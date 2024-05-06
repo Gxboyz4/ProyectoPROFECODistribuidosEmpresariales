@@ -15,6 +15,8 @@ export const Header = ({ userData }) => {
     navigate('/registroproductos', { state: { data: userData } });
   };
   const salirClick = () => {
+    localStorage.removeItem('supermercado');
+    localStorage.removeItem('token');
     navigate('/');
   }
 

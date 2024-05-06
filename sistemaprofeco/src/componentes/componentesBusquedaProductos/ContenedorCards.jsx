@@ -59,9 +59,8 @@ export const ContenedorCards = ({ filtros }) => {
                     urlPeticion = "http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/consultarpagina/1";
                 }
 
-                const response = await fetch(urlPeticion, {
-                    headers: { 'Authorization': `Bearer ${token == null ? await getAccessTokenSilently() : token}` }
-                });
+                console.log(token)
+                const response = await fetch(urlPeticion);
 
                 if (!response.ok) {
                     console.log(response.status);

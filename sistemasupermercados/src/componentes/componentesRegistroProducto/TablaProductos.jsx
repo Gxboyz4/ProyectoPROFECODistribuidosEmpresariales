@@ -16,7 +16,10 @@ export const TablaProductos = ({ estado, onEdit, productoActualizado }) => {
   const eliminarProducto = async (id) => {
     try {
       const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/eliminar/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
       });
       if (response.ok) {
         console.log("Producto eliminado");
@@ -35,7 +38,12 @@ export const TablaProductos = ({ estado, onEdit, productoActualizado }) => {
 
   const cargarProductos = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/consultarproductosidsuper/query?idSupermercado=${idSupermercado}&pagina=${pagina}`);
+      console.log(idSupermercado);
+      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/consultarproductosidsuper/query?idSupermercado=${idSupermercado}&pagina=${pagina}`,{         
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
+      });
       if (response.ok) {
         const data = await response.json();
         setData(data);

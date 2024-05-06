@@ -16,7 +16,11 @@ export const TablaProductos = ({ estado, onEdit, productoActualizado }) => {
 
   const cargarProductos = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/consultarproductosidsuper/query?idSupermercado=${idSupermercado}&pagina=${pagina}`);
+      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/consultarproductosidsuper/query?idSupermercado=${idSupermercado}&pagina=${pagina}`,{
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
+      });
       if (response.ok) {
         const data = await response.json();
         setData(data);

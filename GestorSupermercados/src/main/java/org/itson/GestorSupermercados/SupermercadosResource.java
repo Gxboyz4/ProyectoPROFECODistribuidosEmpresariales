@@ -19,7 +19,10 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import jwt.JWTAlgorithm;
 
 /**
  * REST Web Service
@@ -32,9 +35,11 @@ public class SupermercadosResource {
     @Context
     private UriInfo context;
     private IFachadaDAO dao;
+    private JWTAlgorithm jwt;
 
     public SupermercadosResource() {
         dao = new FachadaDAO();
+        jwt = new JWTAlgorithm();
     }
 
     //http://localhost:8080/GestorSupermercados/resources/supermercados/
@@ -99,7 +104,11 @@ public class SupermercadosResource {
             @QueryParam("contrasenia") String contrasenia) {
         Supermercado supermercadoAutenticar = dao.autenticar(correo, contrasenia);
         if (supermercadoAutenticar != null) {
-            return Response.ok().entity(supermercadoAutenticar).build();
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("supermercado", supermercadoAutenticar);
+            respuesta.put("token", jwt.generarToken(supermercadoAutenticar.getId()));
+            
+            return Response.ok().entity(respuesta).build();
         }
         return Response.status(404).build();
     }

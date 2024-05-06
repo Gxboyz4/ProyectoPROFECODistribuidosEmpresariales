@@ -1,10 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import ReactModal from "react-modal";
 import "../../estilos/estilosInconsistencias/frmInconsistencias.css";
+import { useAuth0 } from "@auth0/auth0-react"
 
 export const FrmInconsistencias = ({idSupermercado, idProducto}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [descripcion, setDescripcion] = useState('');
+    const [token, setToken] = useState(null);
+    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = await getAccessTokenSilently();
+                setToken(token);
+            } catch (error) {
+            }
+        };
+
+        if (isAuthenticated) {
+            fetchData();
+        }
+    }, [getAccessTokenSilently, isAuthenticated]);
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -29,7 +46,8 @@ export const FrmInconsistencias = ({idSupermercado, idProducto}) => {
             const response = await fetch('http://localhost:8080/APIGatewayConsumidores/resources/apiconsumidores/inconsistencias/publicar/', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token == null ? await getAccessTokenSilently() : token}`
                 },
                 body: JSON.stringify(nuevaInconsistencia)
             });

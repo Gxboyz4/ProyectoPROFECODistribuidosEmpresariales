@@ -16,11 +16,8 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import jwt.JWTAlgorithm;
+import validador.ValidadorTokens;
 
 /**
  *
@@ -29,8 +26,7 @@ import org.apache.http.util.EntityUtils;
 public class FiltroToken implements Filter {
 
     private static final boolean debug = true;
-
-    private final String uriApi = "https://dev-k6ciyg872mcyz0mm.us.auth0.com/userinfo";
+    private ValidadorTokens validador;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
@@ -38,6 +34,7 @@ public class FiltroToken implements Filter {
     private FilterConfig filterConfig = null;
 
     public FiltroToken() {
+        validador = new ValidadorTokens();
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
@@ -68,29 +65,18 @@ public class FiltroToken implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 
         String authHeader = req.getHeader("Authorization");
-
+        String method = req.getMethod();
+         
         String url = req.getRequestURL().toString();
-        
-        if (url.contains("autenticar") || url.contains("supermercados/registrar")) {
+
+        if (url.contains("autenticar") || url.contains("supermercados/registrar") || 
+                url.contains("consultarpagina") || (url.contains("consultarfiltros")&&!url.contains("idSupermercado"))) {
             chain.doFilter(request, response);
         } else {
-            if (authHeader != null && authHeader.startsWith("Bearer")) {
-                String token = authHeader.substring(7);
-
-                try (CloseableHttpClient client = HttpClients.createDefault()) {
-                    HttpGet httpGet = new HttpGet(uriApi);
-                    httpGet.setHeader("Authorization", "Bearer " + token);
-
-                    HttpResponse httpResponse = client.execute(httpGet);
-                    int statusCode = httpResponse.getStatusLine().getStatusCode();
-
-                    if (statusCode == 200) {
-                        chain.doFilter(request, response);
-                    } else {
-                        res.sendError(401, "No tienes permiso");
-                    }
-                } catch (Exception e) {
-                    System.err.println("Error al obtener la información del usuario: " + e);
+            if (authHeader != null) {
+                if(validador.validarToken(authHeader)){
+                    chain.doFilter(request, response);
+                }else{
                     res.sendError(401, "No tienes permiso");
                 }
             } else {

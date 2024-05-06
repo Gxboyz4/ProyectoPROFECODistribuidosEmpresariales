@@ -12,7 +12,7 @@ export const ContenedorRegistrarProducto = ({ estado, productoSeleccionado, onEd
     const [error, setError] = useState('');
     const [mensajeExito, setExito] = useState('');
 
-    
+
     const [productoActual, setProductoActual] = useState(productoSeleccionado);
 
     const escribirImagenEnDirectorio = (imagenFile) => {
@@ -58,7 +58,8 @@ export const ContenedorRegistrarProducto = ({ estado, productoSeleccionado, onEd
             const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/actualizar/`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token') 
                 },
                 body: JSON.stringify(productoActualizado)
             });
@@ -96,7 +97,8 @@ export const ContenedorRegistrarProducto = ({ estado, productoSeleccionado, onEd
             const response = await fetch('http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/registrar/', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token') 
                 },
                 body: JSON.stringify(nuevoProducto)
             });
@@ -126,7 +128,7 @@ export const ContenedorRegistrarProducto = ({ estado, productoSeleccionado, onEd
                 <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
                 <input type="text" placeholder="Categoría" value={categoria} onChange={(e) => setCategoria(e.target.value)} required />
                 <input type="file" accept=".png,.jpg" onChange={handleImagenChange} />
-                <input type="text" readOnly value={imagenFileName}required /> {/* Campo de texto no editable para mostrar el nombre del archivo */}
+                <input type="text" readOnly value={imagenFileName} required /> {/* Campo de texto no editable para mostrar el nombre del archivo */}
                 <input type="number" placeholder="Precio" value={precio} onChange={(e) => setPrecio(e.target.value)} required />
                 <button type="submit" className="botonRegistrar">{productoActual ? 'Actualizar' : 'Registrar'}</button>
             </form>

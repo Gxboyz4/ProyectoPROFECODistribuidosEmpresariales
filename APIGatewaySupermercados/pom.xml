@@ -23,14 +23,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>auth0</artifactId>
-            <version>1.0.0</version> <!-- Asegúrate de usar la última versión disponible -->
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ComponenteJWT</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     

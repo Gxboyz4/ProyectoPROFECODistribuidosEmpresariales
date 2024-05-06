@@ -16,6 +16,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import validador.ValidadorTokens;
 
 /**
  *
@@ -25,12 +26,15 @@ public class FiltroToken implements Filter {
 
     private static final boolean debug = true;
 
+    private ValidadorTokens validador;
+
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
 
     public FiltroToken() {
+        validador = new ValidadorTokens();
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
@@ -47,18 +51,25 @@ public class FiltroToken implements Filter {
         }
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain)
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        String requestMethod = req.getMethod();
-        if (requestMethod.equals("GET")) {
-            res.sendError(401, "No tienes permiso");
+        String authHeader = req.getHeader("Authorization");
+
+        String url = req.getRequestURL().toString();
+
+        if (authHeader != null) {
+            if(validador.validarToken(authHeader)){
+                chain.doFilter(request, response);
+            }else{
+                res.sendError(401, "No tienes permiso");
+            }
         } else {
-            chain.doFilter(request, response);
+            res.sendError(401, "No tienes permiso");
         }
     }
 

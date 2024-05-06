@@ -15,9 +15,10 @@ export const ContenedorLogin = () => {
           const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/supermercados/autenticar/query?correo=${correo}&contrasenia=${password}`);
           if (response.ok) {
             const data = await response.json();
-            console.log('Respuesta del servidor:', data);
+            localStorage.setItem('supermercado', JSON.stringify(data.supermercado));
+            localStorage.setItem('token', data.token);
             setError('');
-            navigate('/menu',{state:{data}})
+            navigate('/menu')
           } else {
             console.log('Error, usuario no encontrado:', response.status);
             setError('Usuario o contraseña incorrectos');

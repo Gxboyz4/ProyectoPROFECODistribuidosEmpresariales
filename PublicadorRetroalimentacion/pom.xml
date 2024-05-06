@@ -32,6 +32,11 @@
             <artifactId>PublicadorInconsistencias</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.itson</groupId>
+            <artifactId>ComponenteJWT</artifactId>
+            <version>1</version>
+        </dependency>
     </dependencies>
     
     <build>

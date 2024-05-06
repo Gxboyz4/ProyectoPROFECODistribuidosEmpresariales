@@ -19,6 +19,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -34,43 +35,17 @@ public class ApiconsumidoresResource {
     @Path("/{servicio}/{metodo}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response enrutarSolicitudPost(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo, String cuerpo) {
+    public Response enrutarSolicitudPost(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo, String cuerpo,
+            @Context HttpHeaders headers) {
+        String tokenJWT = headers.getHeaderString("Authorization");
         String url = this.obtenerUrl(servicio, metodo);
         if (url != null) {
-            Response response = this.regresarInvocationBuilder(url).post(Entity.json(cuerpo));
+            Response response = this.regresarInvocationBuilder(url).header("Authorization", tokenJWT).post(Entity.json(cuerpo));
             return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
     }
-
-    @PUT
-    @Path("/{servicio}/{metodo}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response enrutarSolicitudPut(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo, String cuerpo) {
-        String url = this.obtenerUrl(servicio, metodo);
-        if (url != null) {
-            Response response = this.regresarInvocationBuilder(url).put(Entity.json(cuerpo));
-            return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
-        }
-        return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
-    }
-
-    @GET
-    @Path("/{servicio}/{metodo}/query")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response enrutarSolicitudQuery(@PathParam("servicio") String servicio, @PathParam("metodo") String metodo,
-            @QueryParam("correo") String correo, @QueryParam("contrasenia") String contrasenia) {
-        String url = this.obtenerUrl(servicio, metodo);
-        url += "correo=" + correo + "&contrasenia=" + contrasenia;
-        if (url != null) {
-            Response response = this.regresarInvocationBuilder(url).get();
-
-            return Response.status(response.getStatus()).entity(response.readEntity(String.class)).build();
-        }
-        return Response.status(Response.Status.BAD_REQUEST).entity("Servicio y/o método no reconocido: " + metodo).build();
-    }
-
+    
     private Invocation.Builder regresarInvocationBuilder(String url) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(url);
@@ -82,24 +57,6 @@ public class ApiconsumidoresResource {
         String url = "http://localhost:8080/";
         
         switch (servicio) {
-            case "consumidores":
-                url += "GestorConsumidores/resources/consumidores";
-                switch (metodo) {
-                    case "registrar":
-                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
-                        url += "/";
-                        break;
-                    case "autenticar":
-                        url += "/query?";
-                        break;
-                    case "actualizar":
-                        System.out.println("Metodo " + metodo + " del servicio " + servicio);
-                        url += "/";
-                        break;
-                    default:
-                        return null;
-                }
-                break;
             case "inconsistencias":
                 url += "PublicadorRetroalimentacion/resources/publicador";
                 switch (metodo) {
