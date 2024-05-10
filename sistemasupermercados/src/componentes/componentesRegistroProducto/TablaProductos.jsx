@@ -3,19 +3,14 @@ import { Table, Button } from 'react-bootstrap';
 import '../../estilos/estilosRegistroProducto/TablaProductos.css';
 
 export const TablaProductos = ({ estado, onEdit, productoActualizado }) => {
-
   const idSupermercado = estado.data.id;
   const [data, setData] = useState([]);
   const [pagina, setPagina] = useState(1);
   const [paginaActual, setPaginaActual] = useState(1);
 
-  const onDelete = (id) => {
-    eliminarProducto(id);
-  };
-
-  const eliminarProducto = async (id) => {
+  const onDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/eliminar/${id}`, {
+      const response = await fetch(`http://localhost:8081/APIGatewaySupermercados-1/resources/apisupermercados/productos/eliminar/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': localStorage.getItem('token')
@@ -23,7 +18,7 @@ export const TablaProductos = ({ estado, onEdit, productoActualizado }) => {
       });
       if (response.ok) {
         console.log("Producto eliminado");
-        cargarProductos(); // Llama a cargarProductos después de eliminar
+        cargarProductos();
       } else {
         console.error('Hubo un error al eliminar:', response.statusText);
       }
@@ -32,14 +27,9 @@ export const TablaProductos = ({ estado, onEdit, productoActualizado }) => {
     }
   };
 
-  useEffect(() => {
-    cargarProductos();
-  }, [productoActualizado]);
-
   const cargarProductos = async () => {
     try {
-      console.log(idSupermercado);
-      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/consultarproductosidsuper/query?idSupermercado=${idSupermercado}&pagina=${pagina}`,{         
+      const response = await fetch(`http://localhost:8081/APIGatewaySupermercados-1/resources/apisupermercados/productos/consultarproductosidsuper/query?idSupermercado=${idSupermercado}&pagina=${pagina}`, {
         headers: {
           'Authorization': localStorage.getItem('token')
         }
@@ -49,7 +39,6 @@ export const TablaProductos = ({ estado, onEdit, productoActualizado }) => {
         setData(data);
         setPaginaActual(pagina);
       } else {
-        //console.error('Hubo un error al cargar los productos:', response.statusText);
         setPagina(paginaActual);
       }
     } catch (error) {
@@ -59,7 +48,7 @@ export const TablaProductos = ({ estado, onEdit, productoActualizado }) => {
 
   useEffect(() => {
     cargarProductos();
-  }, [idSupermercado, pagina, paginaActual]);
+  }, [productoActualizado, idSupermercado, pagina, paginaActual]);
 
   return (
     <div className="tabla-productos-container">

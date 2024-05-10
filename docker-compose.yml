@@ -1,0 +1,183 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongoprofeco
+    hostname: host-mongo
+    volumes:
+      - mongodb_data_container:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - profeco-network
+
+  #rabbitmq:
+  #  image: rabbitmq:latest
+   # container_name: rabbitmq
+  #  depends_on:
+   #   - mongo
+   # ports:
+   #   - 5672:5672
+   #   - 15672:15672
+    #networks:
+    #  - profeco-network
+
+  #capadatosinconsistencias:
+  #  build: ./capadatosinconsistencias
+   # depends_on:
+  #    - mongo
+   # networks:
+   #   - profeco-network
+   # links:
+  #    - mongo
+   # environment:
+   #   MONGO_URI: mongodb://mongo:27017
+
+  #capadatosofertas:
+   # build: ./capadatosofertas
+  #  depends_on:
+   #   - mongo
+  #  networks:
+   #   - profeco-network
+  #  links:
+   #   - mongo
+   # environment:
+  #    MONGO_URI: mongodb://mongo:27017
+
+  capadatosproductos:
+    build: ./capadatosproductos
+    depends_on:
+      - mongo
+    networks:
+      - profeco-network
+    links:
+      - mongo
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+
+  capadatossupermercados:
+    build: ./capadatossupermercados
+    depends_on:
+      - mongo
+    networks:
+      - profeco-network
+    links:
+      - mongo
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+
+  gestordeproductos:
+    build: ./gestordeproductos
+    depends_on:
+      - capadatosproductos
+    ports:
+      - "8080:8080"
+    links:
+      - capadatosproductos
+    networks:
+      - profeco-network
+
+  gestorsupermercados:
+    build: ./gestorsupermercados
+    depends_on:
+      - capadatossupermercados
+    ports:
+      - "8079:8080"
+    links:
+      - capadatossupermercados
+    networks:
+      - profeco-network
+
+  #gestorinconsistencias:
+   # build: ./gestorinconsistencias
+   # depends_on:
+   #   - capadatosinconsistencias
+   #   - publicadorinconsistencias
+   # ports:
+   #   - "8078:8080"
+    #links:
+    #  - capadatosinconsistencias
+    #  - publicadorinconsistencias
+    #networks:
+    #  - profeco-network
+
+  #gestorofertas:
+  #  build: ./gestorofertas
+   # depends_on:
+   #   - capadatosofertas
+  #    - publicadorofertas
+   # ports:
+   #   - "8077:8080"
+   # links:
+   #   - capadatosinconsistencias
+   #   - publicadorofertas
+   # networks:
+   #   - profeco-network
+
+  #publicadorinconsistencias:
+   # build: ./publicadorinconsistencias
+   # depends_on:
+   #   - capadatosinconsistencias
+  #    - rabbitmq
+   # links:
+   #   - capadatosinconsistencias
+    #  - rabbitmq
+   # networks:
+   #   - profeco-network
+
+  #publicadorofertas:
+   # build: ./publicadorofertas
+   # depends_on:
+  #    - capadatosofertas
+   #   - rabbitmq
+  #  links:
+   #   - capadatosofertas
+   #   - rabbitmq
+  #  networks:
+   #   - profeco-network
+
+  #publicadorretroalimentacion:
+   # build: ./publicadorretroalimentacion
+  #  depends_on:
+  #    - capadatosinconsistencias
+  #    - publicadorinconsistencias
+  #  ports:
+  #    - "8076:8080"
+   # links:
+  #   - capadatosinconsistencias
+  #    - publicadorinconsistencias
+  #  networks:
+   #   - profeco-network
+
+  apigatewaysupermercados:
+    build: ./apigatewaysupermercados
+    depends_on:
+      - gestorsupermercados
+      - gestordeproductos
+      #- gestorofertas
+    ports:
+      - "8081:8080"
+    links:
+      - gestorsupermercados
+      - gestordeproductos
+      #- gestorofertas
+    networks:
+      - profeco-network
+
+  #apigatewayconsumidores:
+   # build: ./apigatewayconsumidores
+   # depends_on:
+   #   - publicadorretroalimentacion
+   # ports:
+   #   - "8082:8080"
+   # links:
+   #   - publicadorretroalimentacion
+   # networks:
+   #   - profeco-network
+
+networks:
+  profeco-network:
+    driver: bridge
+volumes:
+  mongodb_data_container:

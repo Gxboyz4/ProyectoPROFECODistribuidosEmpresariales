@@ -58,7 +58,7 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoS
         };
 
         try {
-            const response = await fetch('http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/ofertas/registrar/', {
+            const response = await fetch('http://localhost:8081/APIGatewaySupermercados-1/resources/apisupermercados/ofertas/registrar/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ export const ContenedorGestionOfertas = ({ estado, ofertaSeleccionada, productoS
         };
 
         try {
-            const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/ofertas/actualizar/`, {
+            const response = await fetch(`http://localhost:8081/APIGatewaySupermercados-1/resources/apisupermercados/ofertas/actualizar/`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

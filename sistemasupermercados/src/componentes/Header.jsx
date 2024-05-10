@@ -26,7 +26,7 @@ export const Header = ({ userData }) => {
       <img src={logoProfeco} alt="Profeco" className="logo" />
       </div>
       <div className='menu-text'>
-        Bienvenido, {userData.nombre}!
+        Bienvenido,  {localStorage.getItem('supermercado')?userData.nombre:' usuario'}!
       </div>
       <div className="menu-options">
         <button onClick={handleGestionOfertasClick}>Gestión de Ofertas</button>

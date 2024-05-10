@@ -12,7 +12,7 @@ export const ContenedorLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/supermercados/autenticar/query?correo=${correo}&contrasenia=${password}`);
+          const response = await fetch(`http://localhost:8081/APIGatewaySupermercados-1/resources/apisupermercados/supermercados/autenticar/query?correo=${correo}&contrasenia=${password}`);
           if (response.ok) {
             const data = await response.json();
             localStorage.setItem('supermercado', JSON.stringify(data.supermercado));

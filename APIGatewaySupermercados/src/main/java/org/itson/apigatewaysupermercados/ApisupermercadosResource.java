@@ -175,9 +175,11 @@ public class ApisupermercadosResource {
 
         switch (servicio) {
             case "supermercados":
-                url += "GestorSupermercados/resources/supermercados";
+                url = "http://gestorsupermercados:8080/";
+                url += "GestorSupermercados-1/resources/supermercados";
                 switch (metodo) {
                     case "registrar":
+                        
                         System.out.println("Metodo " + metodo + " del servicio " + servicio);
                         url += "/";
                         break;
@@ -201,8 +203,10 @@ public class ApisupermercadosResource {
                 }
                 break;
             case "productos":
-                url += "GestorDeProductos/resources/productos";
+                url = "http://gestordeproductos:8080/";
+                url += "GestorDeProductos-1/resources/productos";
                 switch (metodo) {
+                    
                     case "registrar":
                         System.out.println("Metodo " + metodo + " del servicio " + servicio);
                         url += "/";
@@ -232,7 +236,7 @@ public class ApisupermercadosResource {
                 }
                 break;
             case "ofertas":
-                url += "GestorOfertas/resources/ofertas";
+                url += "GestorOfertas-1/resources/ofertas";
                 switch (metodo) {
                     case "registrar":
                         System.out.println("Metodo " + metodo + " del servicio " + servicio);

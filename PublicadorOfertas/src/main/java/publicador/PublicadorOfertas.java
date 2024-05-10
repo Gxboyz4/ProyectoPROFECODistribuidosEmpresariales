@@ -12,7 +12,7 @@ public class PublicadorOfertas implements IPublicador{
     @Override
     public void publicarOferta(Oferta oferta) {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        factory.setHost("rabbitmq");
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             String jsonOferta = ConvertidorJSON.convertirOfertaAJson(oferta);

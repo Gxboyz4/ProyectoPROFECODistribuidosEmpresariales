@@ -12,7 +12,7 @@ public class PublicadorInconsistencias implements IPublicador{
     @Override
     public void publicarInconsistencia(Inconsistencia inconsistencia) {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        factory.setHost("rabbitmq");
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             String jsonInconsistencia = ConvertidorJSON.convertirInconsistenciaAJson(inconsistencia);
