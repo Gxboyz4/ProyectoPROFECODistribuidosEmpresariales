@@ -43,7 +43,7 @@ export const FrmInconsistencias = ({idSupermercado, idProducto}) => {
         };
 
         try {
-            const response = await fetch('http://localhost:8080/APIGatewayConsumidores/resources/apiconsumidores/inconsistencias/publicar/', {
+            const response = await fetch('https://localhost:8443/APIGatewayConsumidores/resources/apiconsumidores/inconsistencias/publicar/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

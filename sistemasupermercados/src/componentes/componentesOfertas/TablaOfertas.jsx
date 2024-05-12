@@ -15,7 +15,7 @@ export const TablaOfertas = ({ estado, onEdit, ofertaActualizada }) => {
 
   const eliminarOferta= async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/ofertas/eliminar/${id}`, {
+      const response = await fetch(`https://localhost:8443/APIGatewaySupermercados/resources/apisupermercados/ofertas/eliminar/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': localStorage.getItem('token')
@@ -37,7 +37,7 @@ export const TablaOfertas = ({ estado, onEdit, ofertaActualizada }) => {
 
   const cargarOfertas = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/ofertas/consultarofertasidsuper/query?idSupermercado=${idSupermercado}&pagina=${pagina}`,{
+      const response = await fetch(`https://localhost:8443/APIGatewaySupermercados/resources/apisupermercados/ofertas/consultarofertasidsuper/query?idSupermercado=${idSupermercado}&pagina=${pagina}`,{
         headers: {
           'Authorization': localStorage.getItem('token')
         }

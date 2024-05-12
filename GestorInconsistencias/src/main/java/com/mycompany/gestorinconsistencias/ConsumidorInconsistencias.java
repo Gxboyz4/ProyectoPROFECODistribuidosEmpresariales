@@ -28,7 +28,7 @@ public class ConsumidorInconsistencias {
         
         try{
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost"); // Change this if RabbitMQ is not on localhost
+        factory.setHost("localhost"); 
 
         
             Connection connection = factory.newConnection(); Channel channel = connection.createChannel();
@@ -36,7 +36,7 @@ public class ConsumidorInconsistencias {
             
             String queueName = channel.queueDeclare().getQueue();
             
-            // Unimos la cola al intercambio
+            
             channel.queueBind(queueName, EXCHANGE_NAME, "");
             System.out.println(" [*] Esperando mensajes. Para salir presione CTRL+C");
             
@@ -44,7 +44,7 @@ public class ConsumidorInconsistencias {
                 String message = new String(delivery.getBody(), "UTF-8");
                 System.out.println(" [x] Recibido '" + message + "'");
 
-                // Convert message to Inconsistencia object (assuming JSON format)
+               
                 Inconsistencia inconsistencia = null;
                 try {
                     inconsistencia = ConvertidorJson.convertirStringAInconsistencia(message);

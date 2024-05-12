@@ -23,7 +23,7 @@ export const ContenedorRegistrarSupermercado = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/supermercados/registrar/', {
+            const response = await fetch('https://localhost:8443/APIGatewaySupermercados/resources/apisupermercados/supermercados/registrar/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

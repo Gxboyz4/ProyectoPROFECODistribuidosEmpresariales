@@ -53,10 +53,10 @@ export const ContenedorCards = ({ filtros }) => {
 
                 if (cadenaConsulta.trim() !== "") {
                     cadenaConsulta += `&pagina=1`;
-                    const inicioUrl = "http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/consultarfiltros/query";
+                    const inicioUrl = "https://localhost:8443/APIGatewaySupermercados/resources/apisupermercados/productos/consultarfiltros/query";
                     urlPeticion = `${inicioUrl}?${cadenaConsulta}`;
                 } else {
-                    urlPeticion = "http://localhost:8080/APIGatewaySupermercados/resources/apisupermercados/productos/consultarpagina/1";
+                    urlPeticion = "https://localhost:8443/APIGatewaySupermercados/resources/apisupermercados/productos/consultarpagina/1";
                 }
 
                 console.log(token)
